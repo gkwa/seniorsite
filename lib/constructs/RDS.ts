@@ -22,20 +22,6 @@ export class RDS extends Construct {
 
         const { subnets, sg } = props
 
-        // Get DB password from Secure String Parameter
-        const dbpw = StringParameter.fromSecureStringParameterAttributes(this, 'master-user', { 
-            parameterName: '/rds/master-pw', 
-            version: 1
-        });
-
-        const dbuser = 'mpadmin'
-
-        const { dbSubnetGroupName } = new CfnDBSubnetGroup(this, 'subnet-db', {
-            dbSubnetGroupName: 'db-subnet-group',
-            dbSubnetGroupDescription: 'Subnet group for RDS instances',
-            subnetIds: [subnets.db.attrSubnetId, subnets.dbB.attrSubnetId]
-        })
-
         // Create assets bucket
         const bucket = new Bucket(this, 'bucket-php', {
             bucketName: 'assets-rds-endpoint-pm-323912',
