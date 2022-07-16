@@ -42,7 +42,7 @@ export class ALB extends Construct {
         });
 
         // User Data script to copy DB endpoint to web folder
-        const userData = Fn.base64('#!/usr/bin/env bash \n sudo aws s3 cp s3://assets-rds-endpoint-pm-323912/db.txt /var/www/html/db.txt')
+        const userData = Fn.base64('#!/usr/bin/env bash \n echo hello world')
 
         // Launch Template
         const launchTemplateData: CfnLaunchTemplate.LaunchTemplateDataProperty = {
