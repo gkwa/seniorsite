@@ -16,8 +16,6 @@ export class RDS extends Construct {
     constructor (scope: Construct, id: string, props: RDSProps){
         super(scope, id)
 
-        const { subnets, sg } = props
-
         // Create assets bucket
         const bucket = new Bucket(this, 'bucket-php', {
             bucketName: 'assets-rds-endpoint-pm-323912',
