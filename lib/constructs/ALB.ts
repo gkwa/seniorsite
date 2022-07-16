@@ -57,7 +57,7 @@ export class ALB extends Construct {
                 groups: [websg.attrGroupId],
                 subnetId: subnets.webA.attrSubnetId,
             }],
-            keyName: 'mpkey',
+            keyName: 'streambox-us-east-1',
             userData
         }
 
