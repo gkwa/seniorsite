@@ -1,11 +1,7 @@
 import { Construct } from "constructs";
 import { RemovalPolicy } from "aws-cdk-lib";
-import { CfnDBInstance, CfnDBSubnetGroup } from "aws-cdk-lib/aws-rds";
-import { StringParameter } from "aws-cdk-lib/aws-ssm";
-import { CfnFunction, Code, Function, Runtime } from "aws-cdk-lib/aws-lambda";
 import { PolicyStatement, Role, ServicePrincipal } from "aws-cdk-lib/aws-iam";
 import { Bucket } from "aws-cdk-lib/aws-s3";
-import { AwsCustomResource, AwsCustomResourcePolicy, PhysicalResourceId } from "aws-cdk-lib/custom-resources";
 import { Subnet } from "./Subnet";
 import { SecurityGroup } from "./SecurityGroup";
 
