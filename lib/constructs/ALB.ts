@@ -23,7 +23,7 @@ export class ALB extends Construct {
         const { vpc, bucket, subnets, websg, albsg } = props
 
         // Web AMI
-        const imageId = 'ami-<xxxxxxxxx>'  
+        const imageId = 'ami-0cff7528ff583bf9a'
       
         // Role for EC2 Instance Profile
         const role = new Role(this, 'webRole', {
