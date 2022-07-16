@@ -66,13 +66,6 @@ export class ALB extends Construct {
             launchTemplateName: 'launch-template'
         })
         
-        // Load Balancer
-        const alb = new CfnLoadBalancer(this, 'cfn-alb', {
-            name: 'website-lb',
-            securityGroups: [albsg.attrGroupId],
-            subnets: [subnets.webA.attrSubnetId, subnets.webB.attrSubnetId],
-        })
-
         // Target Group
         const tg = new CfnTargetGroup(this, 'target-group', {
             port: 80,
