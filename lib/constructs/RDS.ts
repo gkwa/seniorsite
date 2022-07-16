@@ -36,27 +36,6 @@ export class RDS extends Construct {
             subnetIds: [subnets.db.attrSubnetId, subnets.dbB.attrSubnetId]
         })
 
-        // Create DB Instance
-        const db = new CfnDBInstance(this, 'mp-db', {
-            dbInstanceIdentifier: 'mouseplanet-db',
-            dbInstanceClass: 'db.t2.micro',
-            engine: 'mariadb',
-            engineVersion: '10.4.21',
-            dbSubnetGroupName,
-            vpcSecurityGroups: [sg.db.attrGroupId],
-            multiAz: false,
-            storageType: 'standard', // Magnetic storage 
-            storageEncrypted: false,
-            allocatedStorage: '5',
-            availabilityZone: 'us-east-1a',
-            port: '3306',
-            masterUsername: dbuser,
-            masterUserPassword: dbpw.stringValue,
-            publiclyAccessible: false,
-            dbName: 'mouseplanet',
-            licenseModel: 'general-public-license',
-        })
-
         // Create assets bucket
         const bucket = new Bucket(this, 'bucket-php', {
             bucketName: 'assets-rds-endpoint-pm-323912',
@@ -79,34 +58,5 @@ export class RDS extends Construct {
         // Export bucket to reference in another construct
         this.bucket = bucket
 
-        // Lambda Function to write to assets bucket
-        const writeS3 = new Function(this, 'write-s3', {
-            functionName: 'write-to-s3',
-            code: Code.fromAsset('./scripts/write_file'),
-            runtime: Runtime.NODEJS_16_X,
-            handler: 'index.handler',
-            environment: { 
-                'API_ENDPOINT': db.attrEndpointAddress,
-                'BUCKET_NAME': bucket.bucketName 
-            },
-            role: writeRole,
-        })
-
-        // Custom Resource that invokes Lambda Function on deployment
-        new AwsCustomResource(this, 'invoke-write-file', {
-            policy: AwsCustomResourcePolicy.fromStatements([new PolicyStatement({
-                actions: ['lambda:InvokeFunction'],
-                resources: [writeS3.functionArn] 
-            })]),
-            onCreate: {
-                service: 'Lambda',
-                action: 'invoke',
-                parameters: {
-                  FunctionName: writeS3.functionName,
-                  InvocationType: 'Event'
-                },
-                physicalResourceId: PhysicalResourceId.of('writeFileOnDeployment')
-            }
-        })
     }
 }
