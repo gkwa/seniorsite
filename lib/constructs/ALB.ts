@@ -83,7 +83,7 @@ export class ALB extends Construct {
         // Auto Scaling group
         const asg = new CfnAutoScalingGroup(this, 'asg', {
             minSize: '1',
-            maxSize: '3',
+            maxSize: '1',
             autoScalingGroupName: 'asg-mp', 
             launchTemplate: {
                 version: launchTemplate.attrLatestVersionNumber,
