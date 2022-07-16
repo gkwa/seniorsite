@@ -93,26 +93,5 @@ export class ALB extends Construct {
             vpcZoneIdentifier: [subnets.webA.attrSubnetId, subnets.webB.attrSubnetId]
         })
 
-        // Listener
-        new CfnListener(this, 'cfn-listener', {
-            defaultActions:[{
-                type: 'forward',
-                forwardConfig: {
-                    targetGroups: [{
-                        targetGroupArn: tg.ref
-                    }]
-                }
-            }],
-            loadBalancerArn: alb.ref,
-            port: 80,
-            protocol: Protocol.HTTP,
-
-        })
-        
-        // Output Load Balancer public endpoint after deployment
-        new CfnOutput(this, 'loadbalancer-ip', {
-            value: alb.attrDnsName
-        })
-
     }
 }
