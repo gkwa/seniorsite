@@ -47,12 +47,11 @@ export class ALB extends Construct {
         // Launch Template
         const launchTemplateData: CfnLaunchTemplate.LaunchTemplateDataProperty = {
             imageId, // Amazon Linux 2 with Apache, PHP and the website 
-            instanceType: 'c5n.9xlarge',
+            instanceType: 't2.micro',
             iamInstanceProfile: { 
                 arn: webInstanceProfile.attrArn
             },
             networkInterfaces: [{
-                interfaceType: 'efa',
                 associatePublicIpAddress: false,
                 deviceIndex: 0,
                 groups: [websg.attrGroupId],
