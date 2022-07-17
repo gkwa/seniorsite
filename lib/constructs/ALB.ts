@@ -1,8 +1,8 @@
 import { Construct } from 'constructs';
-import { CfnListener, CfnLoadBalancer, CfnTargetGroup, Protocol } from 'aws-cdk-lib/aws-elasticloadbalancingv2';
-import {  CfnAutoScalingGroup } from 'aws-cdk-lib/aws-autoscaling';
+import { CfnTargetGroup, Protocol } from 'aws-cdk-lib/aws-elasticloadbalancingv2';
+import { CfnAutoScalingGroup } from 'aws-cdk-lib/aws-autoscaling';
 import { CfnLaunchTemplate, CfnSecurityGroup, CfnVPC } from 'aws-cdk-lib/aws-ec2';
-import { CfnOutput, Fn } from 'aws-cdk-lib';
+import { Fn } from 'aws-cdk-lib';
 import { Subnet } from './Subnet';
 import { CfnInstanceProfile, PolicyStatement, Role, ServicePrincipal } from 'aws-cdk-lib/aws-iam';
 import { Bucket } from 'aws-cdk-lib/aws-s3';
@@ -17,14 +17,14 @@ interface ALBProps {
 }
 
 export class ALB extends Construct {
-    constructor(scope: Construct, id: string, props: ALBProps){
+    constructor(scope: Construct, id: string, props: ALBProps) {
         super(scope, id)
-    
+
         const { vpc, bucket, subnets, websg, albsg } = props
 
         // Web AMI
         const imageId = 'ami-0cff7528ff583bf9a'
-      
+
         // Role for EC2 Instance Profile
         const role = new Role(this, 'webRole', {
             assumedBy: new ServicePrincipal('ec2.amazonaws.com'),
@@ -35,7 +35,7 @@ export class ALB extends Construct {
             actions: ['s3:GetObject'],
             resources: [`${bucket.bucketArn}/*`]
         }))
-        
+
         const webInstanceProfile = new CfnInstanceProfile(this, 'webInstanceProfile', {
             roles: [role.roleName],
             instanceProfileName: 'webInstanceProfile',
@@ -48,7 +48,7 @@ export class ALB extends Construct {
         const launchTemplateData: CfnLaunchTemplate.LaunchTemplateDataProperty = {
             imageId, // Amazon Linux 2 with Apache, PHP and the website 
             instanceType: 't2.micro',
-            iamInstanceProfile: { 
+            iamInstanceProfile: {
                 arn: webInstanceProfile.attrArn
             },
             networkInterfaces: [{
@@ -65,7 +65,7 @@ export class ALB extends Construct {
             launchTemplateData,
             launchTemplateName: 'launch-template'
         })
-        
+
         // Target Group
         const tg = new CfnTargetGroup(this, 'target-group', {
             port: 80,
@@ -77,7 +77,7 @@ export class ALB extends Construct {
         const asg = new CfnAutoScalingGroup(this, 'asg', {
             minSize: '1',
             maxSize: '1',
-            autoScalingGroupName: 'asg-mp', 
+            autoScalingGroupName: 'asg-mp',
             launchTemplate: {
                 version: launchTemplate.attrLatestVersionNumber,
                 launchTemplateId: launchTemplate.ref,
