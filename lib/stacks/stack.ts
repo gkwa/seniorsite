@@ -13,22 +13,22 @@ export class NetworkStack extends Stack {
     super(scope, id, props);
 
     const { vpc } = new VPC(this, 'vpc-mp')
-    
-    const subnets = new Subnet(this, 'subnets', { vpc } )
+
+    const subnets = new Subnet(this, 'subnets', { vpc })
 
     const securityGroups = new SecurityGroup(this, 'SGs', { vpc })
 
     const igw = new IGW(this, 'IGW', { vpc })
-    
-    new RTable(this, 'rtables', { vpc, subnets, igw})
+
+    new RTable(this, 'rtables', { vpc, subnets, igw })
 
     const { bucket } = new RDS(this, 'mp-rds', { subnets, sg: securityGroups })
-    
-    const alb = new ALB(this, 'ALB', { 
-      websg: securityGroups.web, 
-      subnets, vpc, bucket 
-      })
 
-    alb.node.addDependency(bucket) 
+    const alb = new ALB(this, 'ALB', {
+      websg: securityGroups.web,
+      subnets, vpc, bucket
+    })
+
+    alb.node.addDependency(bucket)
   }
 }
