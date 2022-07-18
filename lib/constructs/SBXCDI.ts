@@ -6,26 +6,26 @@ import { CfnInstanceProfile, PolicyStatement, Role, ServicePrincipal } from 'aws
 import { Bucket } from 'aws-cdk-lib/aws-s3';
 import { aws_ec2 as ec2 } from 'aws-cdk-lib';
 
-interface ALBProps {
+interface SBXCDIProps {
     websg: CfnSecurityGroup,
     subnets: Subnet,
     vpc: CfnVPC,
     bucket: Bucket
 }
 
-export class ALB extends Construct {
-    constructor(scope: Construct, id: string, props: ALBProps) {
+export class SBXCDI extends Construct {
+    constructor(scope: Construct, id: string, props: SBXCDIProps) {
         super(scope, id)
 
         const { vpc, bucket, subnets, websg } = props
 
-        // Web AMI
+        // CDI instance AMI
         const imageId = 'ami-0cff7528ff583bf9a'
 
         // Role for EC2 Instance Profile
         const role = new Role(this, 'webRole', {
             assumedBy: new ServicePrincipal('ec2.amazonaws.com'),
-            description: 'Role for web instances',
+            description: 'Role for CDI instances',
         });
 
         role.addToPolicy(new PolicyStatement({

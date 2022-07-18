@@ -5,7 +5,7 @@ import { Subnet } from '../constructs/Subnet'
 import { SecurityGroup } from '../constructs/SecurityGroup';
 import { IGW } from '../constructs/Igw';
 import { RTable } from '../constructs/RTable';
-import { ALB } from '../constructs/ALB';
+import { SBXCDI } from '../constructs/SBXCDI';
 import { RDS } from '../constructs/RDS';
 import * as cdk from 'aws-cdk-lib';
 
@@ -31,7 +31,7 @@ export class NetworkStack extends Stack {
 
     const { bucket } = new RDS(this, 'mp-rds', { subnets, sg: securityGroups })
 
-    const alb = new ALB(this, 'ALB', {
+    const alb = new SBXCDI(this, 'ALB', {
       websg: securityGroups.web,
       subnets, vpc, bucket
     })
