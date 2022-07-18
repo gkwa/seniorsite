@@ -1,15 +1,7 @@
 Parameters:
-  databasePort:
-    Type: Number
-    Default: 5432
-    AllowedValues:
-      - "1000"
-      - "3000"
-      - "5000"
-      - "5432"
-    Description: The database port to open for ingress connections
-    MaxValue: 10000
-    MinValue: 1
+  keyName:
+    Type: String
+    Description: Your key name
   BootstrapVersion:
     Type: AWS::SSM::Parameter::Value<String>
     Default: /cdk-bootstrap/hnb659fds/version
@@ -316,7 +308,7 @@ Resources:
                   - - ec2.
                     - Ref: AWS::URLSuffix
         Version: "2012-10-17"
-      Description: Role for web instances
+      Description: Role for CDI instances
     DependsOn:
       - mprdsbucketphpAutoDeleteObjectsCustomResourceB26B3ACC
       - mprdsbucketphpPolicyF824DA43
@@ -385,13 +377,13 @@ Resources:
         UserData:
           Fn::Base64: |-
             #!/usr/bin/env bash
-                    curl -O https://streambox-cdi.s3-us-west-2.amazonaws.com/latest/linux/InstallSbxCDI.tgz
-                    tar xzf InstallSbxCDI.tgz
-                    cd InstallSbxCDI
-                    ./installweb
-                    ./installefa
-                    ./installsbx
-                    ./sanity_check
+            curl -O https://streambox-cdi.s3-us-west-2.amazonaws.com/latest/linux/InstallSbxCDI.tgz
+            tar xzf InstallSbxCDI.tgz
+            cd InstallSbxCDI
+            ./installweb
+            ./installefa
+            ./installsbx
+            ./sanity_check
       LaunchTemplateName: launch-template
     DependsOn:
       - mprdsbucketphpAutoDeleteObjectsCustomResourceB26B3ACC
