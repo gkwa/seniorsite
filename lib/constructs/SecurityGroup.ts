@@ -24,18 +24,6 @@ export class SecurityGroup extends Construct {
                 ipProtocol: 'tcp',
                 fromPort: 80,
                 toPort: 80
-            }, {
-                cidrIp: '0.0.0.0/0',
-                description: 'Allow HTTPS access from the internet',
-                ipProtocol: 'tcp',
-                fromPort: 443,
-                toPort: 443
-            }, {
-                cidrIp: '0.0.0.0/0',
-                description: 'Allow SSH access from the internet',
-                ipProtocol: 'tcp',
-                fromPort: 22,
-                toPort: 22
             }]
         })
 
@@ -51,6 +39,18 @@ export class SecurityGroup extends Construct {
                 ipProtocol: 'tcp',
                 fromPort: 80,
                 toPort: 80
+            }, {
+                cidrIp: '0.0.0.0/0',
+                description: 'Allow HTTPS access from the internet',
+                ipProtocol: 'tcp',
+                fromPort: 443,
+                toPort: 443
+            }, {
+                cidrIp: '0.0.0.0/0',
+                description: 'Allow SSH access from the internet',
+                ipProtocol: 'tcp',
+                fromPort: 22,
+                toPort: 22
             }]
         })
 
