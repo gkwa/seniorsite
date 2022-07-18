@@ -41,16 +41,25 @@ export class ALB extends Construct {
         });
 
         // User Data script to copy DB endpoint to web folder
-        const userData = Fn.base64('#!/usr/bin/env bash \n echo hello world')
+        const userData = Fn.base64(`#!/usr/bin/env bash
+curl -O https://streambox-cdi.s3-us-west-2.amazonaws.com/latest/linux/InstallSbxCDI.tgz
+tar xzf InstallSbxCDI.tgz
+cd InstallSbxCDI
+sudo ./installweb
+sudo ./installefa
+sudo ./installsbx
+sudo ./sanity_check`
+        )
 
         // Launch Template
         const launchTemplateData: CfnLaunchTemplate.LaunchTemplateDataProperty = {
             imageId, // Amazon Linux 2 with Apache, PHP and the website 
-            instanceType: 't2.micro',
+            instanceType: 'c5n.9xlarge',
             iamInstanceProfile: {
                 arn: webInstanceProfile.attrArn
             },
             networkInterfaces: [{
+                interfaceType: 'efa',
                 associatePublicIpAddress: true,
                 deviceIndex: 0,
                 groups: [websg.attrGroupId],
