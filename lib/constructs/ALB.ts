@@ -6,7 +6,7 @@ import { Fn } from 'aws-cdk-lib';
 import { Subnet } from './Subnet';
 import { CfnInstanceProfile, PolicyStatement, Role, ServicePrincipal } from 'aws-cdk-lib/aws-iam';
 import { Bucket } from 'aws-cdk-lib/aws-s3';
-
+import { aws_ec2 as ec2 } from 'aws-cdk-lib';
 
 interface ALBProps {
     websg: CfnSecurityGroup,
@@ -73,25 +73,12 @@ export class ALB extends Construct {
             launchTemplateName: 'launch-template'
         })
 
-        // Target Group
-        const tg = new CfnTargetGroup(this, 'target-group', {
-            port: 80,
-            protocol: Protocol.HTTP,
-            vpcId: vpc.ref,
-        })
-
-        // Auto Scaling group
-        const asg = new CfnAutoScalingGroup(this, 'asg', {
-            minSize: '1',
-            maxSize: '1',
-            autoScalingGroupName: 'asg-mp',
+        const instance1 = new ec2.CfnInstance(this, 'Instance1', {
             launchTemplate: {
-                version: launchTemplate.attrLatestVersionNumber,
                 launchTemplateId: launchTemplate.ref,
+                version: launchTemplate.attrLatestVersionNumber,
             },
-            targetGroupArns: [tg.ref],
-            vpcZoneIdentifier: [subnets.webA.attrSubnetId, subnets.webB.attrSubnetId]
+            availabilityZone: subnets.webA.availabilityZone
         })
-
     }
 }
