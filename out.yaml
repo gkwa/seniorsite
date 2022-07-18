@@ -15,8 +15,8 @@ Resources:
       EnableDnsSupport: true
       InstanceTenancy: default
       Tags:
-        - Key: Name
-          Value: vpc-mp
+      - Key: Name
+        Value: vpc-mp
     Metadata:
       aws:cdk:path: NetworkStack/vpc-mp/vpc
   subnetswebAsubnet701EB870:
@@ -28,8 +28,8 @@ Resources:
       CidrBlock: 10.0.0.0/24
       MapPublicIpOnLaunch: false
       Tags:
-        - Key: Name
-          Value: webA-subnet
+      - Key: Name
+        Value: webA-subnet
     Metadata:
       aws:cdk:path: NetworkStack/subnets/webA-subnet
   subnetswebBsubnetC4D81D8C:
@@ -41,8 +41,8 @@ Resources:
       CidrBlock: 10.0.1.0/24
       MapPublicIpOnLaunch: false
       Tags:
-        - Key: Name
-          Value: webB-subnet
+      - Key: Name
+        Value: webB-subnet
     Metadata:
       aws:cdk:path: NetworkStack/subnets/webB-subnet
   subnetsdbsubnetACDC0DAEA:
@@ -54,8 +54,8 @@ Resources:
       CidrBlock: 10.0.2.0/24
       MapPublicIpOnLaunch: false
       Tags:
-        - Key: Name
-          Value: db-subnetA
+      - Key: Name
+        Value: db-subnetA
     Metadata:
       aws:cdk:path: NetworkStack/subnets/db-subnetA
   subnetsdbsubnetBBA7B2493:
@@ -67,8 +67,8 @@ Resources:
       CidrBlock: 10.0.3.0/24
       MapPublicIpOnLaunch: false
       Tags:
-        - Key: Name
-          Value: db-subnetB
+      - Key: Name
+        Value: db-subnetB
     Metadata:
       aws:cdk:path: NetworkStack/subnets/db-subnetB
   SGswebsg4384784B:
@@ -77,24 +77,24 @@ Resources:
       GroupDescription: web-sg
       GroupName: web-sg
       SecurityGroupIngress:
-        - CidrIp: 0.0.0.0/0
-          Description: Allow HTTP access from the internet
-          FromPort: 80
-          IpProtocol: tcp
-          ToPort: 80
-        - CidrIp: 0.0.0.0/0
-          Description: Allow HTTPS access from the internet
-          FromPort: 443
-          IpProtocol: tcp
-          ToPort: 443
-        - CidrIp: 0.0.0.0/0
-          Description: Allow SSH access from the internet
-          FromPort: 22
-          IpProtocol: tcp
-          ToPort: 22
+      - CidrIp: 0.0.0.0/0
+        Description: Allow HTTP access from the internet
+        FromPort: 80
+        IpProtocol: tcp
+        ToPort: 80
+      - CidrIp: 0.0.0.0/0
+        Description: Allow HTTPS access from the internet
+        FromPort: 443
+        IpProtocol: tcp
+        ToPort: 443
+      - CidrIp: 0.0.0.0/0
+        Description: Allow SSH access from the internet
+        FromPort: 22
+        IpProtocol: tcp
+        ToPort: 22
       Tags:
-        - Key: Name
-          Value: web-sg
+      - Key: Name
+        Value: web-sg
       VpcId:
         Ref: vpcmpvpc6CD04676
     Metadata:
@@ -103,8 +103,8 @@ Resources:
     Type: AWS::EC2::InternetGateway
     Properties:
       Tags:
-        - Key: Name
-          Value: igw-mp
+      - Key: Name
+        Value: igw-mp
     Metadata:
       aws:cdk:path: NetworkStack/IGW/igw-mp
   IGWvpcgwmp3E9B5D1C:
@@ -122,8 +122,8 @@ Resources:
       VpcId:
         Ref: vpcmpvpc6CD04676
       Tags:
-        - Key: Name
-          Value: web-rtable
+      - Key: Name
+        Value: web-rtable
     Metadata:
       aws:cdk:path: NetworkStack/rtables/web-rtable
   rtableswebroute3B8EA4C2:
@@ -131,8 +131,8 @@ Resources:
     Properties:
       RouteTableId:
         Fn::GetAtt:
-          - rtableswebrtable3A00AAC2
-          - RouteTableId
+        - rtableswebrtable3A00AAC2
+        - RouteTableId
       DestinationCidrBlock: 0.0.0.0/0
       GatewayId:
         Ref: IGWigwmp8994DC2D
@@ -143,12 +143,12 @@ Resources:
     Properties:
       RouteTableId:
         Fn::GetAtt:
-          - rtableswebrtable3A00AAC2
-          - RouteTableId
+        - rtableswebrtable3A00AAC2
+        - RouteTableId
       SubnetId:
         Fn::GetAtt:
-          - subnetswebAsubnet701EB870
-          - SubnetId
+        - subnetswebAsubnet701EB870
+        - SubnetId
     Metadata:
       aws:cdk:path: NetworkStack/rtables/webA-srta
   rtableswebBsrta2EBB585F:
@@ -156,12 +156,12 @@ Resources:
     Properties:
       RouteTableId:
         Fn::GetAtt:
-          - rtableswebrtable3A00AAC2
-          - RouteTableId
+        - rtableswebrtable3A00AAC2
+        - RouteTableId
       SubnetId:
         Fn::GetAtt:
-          - subnetswebBsubnetC4D81D8C
-          - SubnetId
+        - subnetswebBsubnetC4D81D8C
+        - SubnetId
     Metadata:
       aws:cdk:path: NetworkStack/rtables/webB-srta
   mprdsbucketphp1DD58A6E:
@@ -169,8 +169,8 @@ Resources:
     Properties:
       BucketName: assets-rds-endpoint-pm-323912
       Tags:
-        - Key: aws-cdk:auto-delete-objects
-          Value: "true"
+      - Key: aws-cdk:auto-delete-objects
+        Value: "true"
     UpdateReplacePolicy: Delete
     DeletionPolicy: Delete
     Metadata:
@@ -182,26 +182,26 @@ Resources:
         Ref: mprdsbucketphp1DD58A6E
       PolicyDocument:
         Statement:
-          - Action:
-              - s3:DeleteObject*
-              - s3:GetBucket*
-              - s3:List*
-            Effect: Allow
-            Principal:
-              AWS:
-                Fn::GetAtt:
-                  - CustomS3AutoDeleteObjectsCustomResourceProviderRole3B1BD092
-                  - Arn
-            Resource:
-              - Fn::GetAtt:
-                  - mprdsbucketphp1DD58A6E
-                  - Arn
-              - Fn::Join:
-                  - ""
-                  - - Fn::GetAtt:
-                        - mprdsbucketphp1DD58A6E
-                        - Arn
-                    - /*
+        - Action:
+          - s3:DeleteObject*
+          - s3:GetBucket*
+          - s3:List*
+          Effect: Allow
+          Principal:
+            AWS:
+              Fn::GetAtt:
+              - CustomS3AutoDeleteObjectsCustomResourceProviderRole3B1BD092
+              - Arn
+          Resource:
+          - Fn::GetAtt:
+            - mprdsbucketphp1DD58A6E
+            - Arn
+          - Fn::Join:
+            - ""
+            - - Fn::GetAtt:
+                - mprdsbucketphp1DD58A6E
+                - Arn
+              - /*
         Version: "2012-10-17"
     Metadata:
       aws:cdk:path: NetworkStack/mp-rds/bucket-php/Policy/Resource
@@ -210,12 +210,12 @@ Resources:
     Properties:
       ServiceToken:
         Fn::GetAtt:
-          - CustomS3AutoDeleteObjectsCustomResourceProviderHandler9D90184F
-          - Arn
+        - CustomS3AutoDeleteObjectsCustomResourceProviderHandler9D90184F
+        - Arn
       BucketName:
         Ref: mprdsbucketphp1DD58A6E
     DependsOn:
-      - mprdsbucketphpPolicyF824DA43
+    - mprdsbucketphpPolicyF824DA43
     UpdateReplacePolicy: Delete
     DeletionPolicy: Delete
     Metadata:
@@ -225,10 +225,10 @@ Resources:
     Properties:
       AssumeRolePolicyDocument:
         Statement:
-          - Action: sts:AssumeRole
-            Effect: Allow
-            Principal:
-              Service: lambda.amazonaws.com
+        - Action: sts:AssumeRole
+          Effect: Allow
+          Principal:
+            Service: lambda.amazonaws.com
         Version: "2012-10-17"
       RoleName: writeS3Role
     Metadata:
@@ -238,19 +238,19 @@ Resources:
     Properties:
       PolicyDocument:
         Statement:
-          - Action: s3:PutObject
-            Effect: Allow
-            Resource:
-              Fn::Join:
-                - ""
-                - - Fn::GetAtt:
-                      - mprdsbucketphp1DD58A6E
-                      - Arn
-                  - /*
+        - Action: s3:PutObject
+          Effect: Allow
+          Resource:
+            Fn::Join:
+            - ""
+            - - Fn::GetAtt:
+                - mprdsbucketphp1DD58A6E
+                - Arn
+              - /*
         Version: "2012-10-17"
       PolicyName: mprdswriteroleDefaultPolicy199F712E
       Roles:
-        - Ref: mprdswriterole79A2F84C
+      - Ref: mprdswriterole79A2F84C
     Metadata:
       aws:cdk:path: NetworkStack/mp-rds/write-role/DefaultPolicy/Resource
   CustomS3AutoDeleteObjectsCustomResourceProviderRole3B1BD092:
@@ -259,12 +259,12 @@ Resources:
       AssumeRolePolicyDocument:
         Version: "2012-10-17"
         Statement:
-          - Action: sts:AssumeRole
-            Effect: Allow
-            Principal:
-              Service: lambda.amazonaws.com
+        - Action: sts:AssumeRole
+          Effect: Allow
+          Principal:
+            Service: lambda.amazonaws.com
       ManagedPolicyArns:
-        - Fn::Sub: arn:${AWS::Partition}:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+      - Fn::Sub: arn:${AWS::Partition}:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
     Metadata:
       aws:cdk:path: NetworkStack/Custom::S3AutoDeleteObjectsCustomResourceProvider/Role
   CustomS3AutoDeleteObjectsCustomResourceProviderHandler9D90184F:
@@ -279,17 +279,17 @@ Resources:
       Handler: __entrypoint__.handler
       Role:
         Fn::GetAtt:
-          - CustomS3AutoDeleteObjectsCustomResourceProviderRole3B1BD092
-          - Arn
+        - CustomS3AutoDeleteObjectsCustomResourceProviderRole3B1BD092
+        - Arn
       Runtime: nodejs12.x
       Description:
         Fn::Join:
-          - ""
-          - - "Lambda function for auto-deleting objects in "
-            - Ref: mprdsbucketphp1DD58A6E
-            - " S3 bucket."
+        - ""
+        - - 'Lambda function for auto-deleting objects in '
+          - Ref: mprdsbucketphp1DD58A6E
+          - ' S3 bucket.'
     DependsOn:
-      - CustomS3AutoDeleteObjectsCustomResourceProviderRole3B1BD092
+    - CustomS3AutoDeleteObjectsCustomResourceProviderRole3B1BD092
     Metadata:
       aws:cdk:path: NetworkStack/Custom::S3AutoDeleteObjectsCustomResourceProvider/Handler
       aws:asset:path: asset.483ae06ed27ef8ca76e011264d772420593a6cfe8544759c306ef3b98c9e25be
@@ -299,20 +299,20 @@ Resources:
     Properties:
       AssumeRolePolicyDocument:
         Statement:
-          - Action: sts:AssumeRole
-            Effect: Allow
-            Principal:
-              Service:
-                Fn::Join:
-                  - ""
-                  - - ec2.
-                    - Ref: AWS::URLSuffix
+        - Action: sts:AssumeRole
+          Effect: Allow
+          Principal:
+            Service:
+              Fn::Join:
+              - ""
+              - - ec2.
+                - Ref: AWS::URLSuffix
         Version: "2012-10-17"
       Description: Role for CDI instances
     DependsOn:
-      - mprdsbucketphpAutoDeleteObjectsCustomResourceB26B3ACC
-      - mprdsbucketphpPolicyF824DA43
-      - mprdsbucketphp1DD58A6E
+    - mprdsbucketphpAutoDeleteObjectsCustomResourceB26B3ACC
+    - mprdsbucketphpPolicyF824DA43
+    - mprdsbucketphp1DD58A6E
     Metadata:
       aws:cdk:path: NetworkStack/ALB/webRole/Resource
   ALBwebRoleDefaultPolicyEE0D8997:
@@ -320,35 +320,35 @@ Resources:
     Properties:
       PolicyDocument:
         Statement:
-          - Action: s3:GetObject
-            Effect: Allow
-            Resource:
-              Fn::Join:
-                - ""
-                - - Fn::GetAtt:
-                      - mprdsbucketphp1DD58A6E
-                      - Arn
-                  - /*
+        - Action: s3:GetObject
+          Effect: Allow
+          Resource:
+            Fn::Join:
+            - ""
+            - - Fn::GetAtt:
+                - mprdsbucketphp1DD58A6E
+                - Arn
+              - /*
         Version: "2012-10-17"
       PolicyName: ALBwebRoleDefaultPolicyEE0D8997
       Roles:
-        - Ref: ALBwebRoleB7373615
+      - Ref: ALBwebRoleB7373615
     DependsOn:
-      - mprdsbucketphpAutoDeleteObjectsCustomResourceB26B3ACC
-      - mprdsbucketphpPolicyF824DA43
-      - mprdsbucketphp1DD58A6E
+    - mprdsbucketphpAutoDeleteObjectsCustomResourceB26B3ACC
+    - mprdsbucketphpPolicyF824DA43
+    - mprdsbucketphp1DD58A6E
     Metadata:
       aws:cdk:path: NetworkStack/ALB/webRole/DefaultPolicy/Resource
   ALBwebInstanceProfile6646235C:
     Type: AWS::IAM::InstanceProfile
     Properties:
       Roles:
-        - Ref: ALBwebRoleB7373615
+      - Ref: ALBwebRoleB7373615
       InstanceProfileName: webInstanceProfile
     DependsOn:
-      - mprdsbucketphpAutoDeleteObjectsCustomResourceB26B3ACC
-      - mprdsbucketphpPolicyF824DA43
-      - mprdsbucketphp1DD58A6E
+    - mprdsbucketphpAutoDeleteObjectsCustomResourceB26B3ACC
+    - mprdsbucketphpPolicyF824DA43
+    - mprdsbucketphp1DD58A6E
     Metadata:
       aws:cdk:path: NetworkStack/ALB/webInstanceProfile
   ALBlaunchtemplate818E5AA6:
@@ -358,22 +358,22 @@ Resources:
         IamInstanceProfile:
           Arn:
             Fn::GetAtt:
-              - ALBwebInstanceProfile6646235C
-              - Arn
+            - ALBwebInstanceProfile6646235C
+            - Arn
         ImageId: ami-0cff7528ff583bf9a
         InstanceType: t2.micro
         KeyName: streambox-us-east-1
         NetworkInterfaces:
-          - AssociatePublicIpAddress: true
-            DeviceIndex: 0
-            Groups:
-              - Fn::GetAtt:
-                  - SGswebsg4384784B
-                  - GroupId
-            SubnetId:
-              Fn::GetAtt:
-                - subnetswebAsubnet701EB870
-                - SubnetId
+        - AssociatePublicIpAddress: true
+          DeviceIndex: 0
+          Groups:
+          - Fn::GetAtt:
+            - SGswebsg4384784B
+            - GroupId
+          SubnetId:
+            Fn::GetAtt:
+            - subnetswebAsubnet701EB870
+            - SubnetId
         UserData:
           Fn::Base64: |-
             #!/usr/bin/env bash
@@ -386,9 +386,9 @@ Resources:
             ./sanity_check
       LaunchTemplateName: launch-template
     DependsOn:
-      - mprdsbucketphpAutoDeleteObjectsCustomResourceB26B3ACC
-      - mprdsbucketphpPolicyF824DA43
-      - mprdsbucketphp1DD58A6E
+    - mprdsbucketphpAutoDeleteObjectsCustomResourceB26B3ACC
+    - mprdsbucketphpPolicyF824DA43
+    - mprdsbucketphp1DD58A6E
     Metadata:
       aws:cdk:path: NetworkStack/ALB/launch-template
   ALBInstance12737BAF9:
@@ -400,12 +400,12 @@ Resources:
           Ref: ALBlaunchtemplate818E5AA6
         Version:
           Fn::GetAtt:
-            - ALBlaunchtemplate818E5AA6
-            - LatestVersionNumber
+          - ALBlaunchtemplate818E5AA6
+          - LatestVersionNumber
     DependsOn:
-      - mprdsbucketphpAutoDeleteObjectsCustomResourceB26B3ACC
-      - mprdsbucketphpPolicyF824DA43
-      - mprdsbucketphp1DD58A6E
+    - mprdsbucketphpAutoDeleteObjectsCustomResourceB26B3ACC
+    - mprdsbucketphpPolicyF824DA43
+    - mprdsbucketphp1DD58A6E
     Metadata:
       aws:cdk:path: NetworkStack/ALB/Instance1
   CDKMetadata:
@@ -418,86 +418,85 @@ Resources:
 Conditions:
   CDKMetadataAvailable:
     Fn::Or:
-      - Fn::Or:
-          - Fn::Equals:
-              - Ref: AWS::Region
-              - af-south-1
-          - Fn::Equals:
-              - Ref: AWS::Region
-              - ap-east-1
-          - Fn::Equals:
-              - Ref: AWS::Region
-              - ap-northeast-1
-          - Fn::Equals:
-              - Ref: AWS::Region
-              - ap-northeast-2
-          - Fn::Equals:
-              - Ref: AWS::Region
-              - ap-south-1
-          - Fn::Equals:
-              - Ref: AWS::Region
-              - ap-southeast-1
-          - Fn::Equals:
-              - Ref: AWS::Region
-              - ap-southeast-2
-          - Fn::Equals:
-              - Ref: AWS::Region
-              - ca-central-1
-          - Fn::Equals:
-              - Ref: AWS::Region
-              - cn-north-1
-          - Fn::Equals:
-              - Ref: AWS::Region
-              - cn-northwest-1
-      - Fn::Or:
-          - Fn::Equals:
-              - Ref: AWS::Region
-              - eu-central-1
-          - Fn::Equals:
-              - Ref: AWS::Region
-              - eu-north-1
-          - Fn::Equals:
-              - Ref: AWS::Region
-              - eu-south-1
-          - Fn::Equals:
-              - Ref: AWS::Region
-              - eu-west-1
-          - Fn::Equals:
-              - Ref: AWS::Region
-              - eu-west-2
-          - Fn::Equals:
-              - Ref: AWS::Region
-              - eu-west-3
-          - Fn::Equals:
-              - Ref: AWS::Region
-              - me-south-1
-          - Fn::Equals:
-              - Ref: AWS::Region
-              - sa-east-1
-          - Fn::Equals:
-              - Ref: AWS::Region
-              - us-east-1
-          - Fn::Equals:
-              - Ref: AWS::Region
-              - us-east-2
-      - Fn::Or:
-          - Fn::Equals:
-              - Ref: AWS::Region
-              - us-west-1
-          - Fn::Equals:
-              - Ref: AWS::Region
-              - us-west-2
+    - Fn::Or:
+      - Fn::Equals:
+        - Ref: AWS::Region
+        - af-south-1
+      - Fn::Equals:
+        - Ref: AWS::Region
+        - ap-east-1
+      - Fn::Equals:
+        - Ref: AWS::Region
+        - ap-northeast-1
+      - Fn::Equals:
+        - Ref: AWS::Region
+        - ap-northeast-2
+      - Fn::Equals:
+        - Ref: AWS::Region
+        - ap-south-1
+      - Fn::Equals:
+        - Ref: AWS::Region
+        - ap-southeast-1
+      - Fn::Equals:
+        - Ref: AWS::Region
+        - ap-southeast-2
+      - Fn::Equals:
+        - Ref: AWS::Region
+        - ca-central-1
+      - Fn::Equals:
+        - Ref: AWS::Region
+        - cn-north-1
+      - Fn::Equals:
+        - Ref: AWS::Region
+        - cn-northwest-1
+    - Fn::Or:
+      - Fn::Equals:
+        - Ref: AWS::Region
+        - eu-central-1
+      - Fn::Equals:
+        - Ref: AWS::Region
+        - eu-north-1
+      - Fn::Equals:
+        - Ref: AWS::Region
+        - eu-south-1
+      - Fn::Equals:
+        - Ref: AWS::Region
+        - eu-west-1
+      - Fn::Equals:
+        - Ref: AWS::Region
+        - eu-west-2
+      - Fn::Equals:
+        - Ref: AWS::Region
+        - eu-west-3
+      - Fn::Equals:
+        - Ref: AWS::Region
+        - me-south-1
+      - Fn::Equals:
+        - Ref: AWS::Region
+        - sa-east-1
+      - Fn::Equals:
+        - Ref: AWS::Region
+        - us-east-1
+      - Fn::Equals:
+        - Ref: AWS::Region
+        - us-east-2
+    - Fn::Or:
+      - Fn::Equals:
+        - Ref: AWS::Region
+        - us-west-1
+      - Fn::Equals:
+        - Ref: AWS::Region
+        - us-west-2
 Rules:
   CheckBootstrapVersion:
     Assertions:
-      - Assert:
-          Fn::Not:
-            - Fn::Contains:
-                - - "1"
-                  - "2"
-                  - "3"
-                  - "4"
-                  - "5"
-                - Ref: BootstrapVersion
-        AssertDescription: CDK bootstrap stack version 6 required. Please run 'cdk bootstrap' with a recent version of the CDK CLI.
-
+    - Assert:
+        Fn::Not:
+        - Fn::Contains:
+          - - "1"
+            - "2"
+            - "3"
+            - "4"
+            - "5"
+          - Ref: BootstrapVersion
+      AssertDescription: CDK bootstrap stack version 6 required. Please run 'cdk bootstrap' with a recent version of the CDK CLI.
