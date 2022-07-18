@@ -13,12 +13,6 @@ export class NetworkStack extends Stack {
   constructor(scope: Construct, id: string, props?: StackProps) {
     super(scope, id, props);
 
-    const keyName = new cdk.CfnParameter(this, 'keyName', {
-      type: 'String',
-      description: 'Your key name',
-    });
-    console.log('Your key name', keyName.valueAsString);
-
     const { vpc } = new VPC(this, 'vpc-mp')
 
     const subnets = new Subnet(this, 'subnets', { vpc })
