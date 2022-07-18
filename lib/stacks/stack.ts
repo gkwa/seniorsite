@@ -9,21 +9,15 @@ import { ALB } from '../constructs/ALB';
 import { RDS } from '../constructs/RDS';
 import * as cdk from 'aws-cdk-lib';
 
-
 export class NetworkStack extends Stack {
   constructor(scope: Construct, id: string, props?: StackProps) {
     super(scope, id, props);
 
-    // parameter of type Number
-    const databasePort = new cdk.CfnParameter(this, 'databasePort', {
-      type: 'Number',
-      description: 'The database port to open for ingress connections',
-      minValue: 1,
-      maxValue: 10000,
-      allowedValues: ['1000', '3000', '5000', '5432'],
+    const keyName = new cdk.CfnParameter(this, 'keyName', {
+      type: 'String',
+      description: 'Your key name',
     });
-    console.log('database port', databasePort.valueAsString);
-
+    console.log('Your key name', keyName.valueAsString);
 
     const { vpc } = new VPC(this, 'vpc-mp')
 
