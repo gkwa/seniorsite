@@ -1,6 +1,4 @@
 import { Construct } from 'constructs';
-import { CfnTargetGroup, Protocol } from 'aws-cdk-lib/aws-elasticloadbalancingv2';
-import { CfnAutoScalingGroup } from 'aws-cdk-lib/aws-autoscaling';
 import { CfnLaunchTemplate, CfnSecurityGroup, CfnVPC } from 'aws-cdk-lib/aws-ec2';
 import { Fn } from 'aws-cdk-lib';
 import { Subnet } from './Subnet';
