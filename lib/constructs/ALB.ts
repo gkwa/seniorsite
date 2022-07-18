@@ -1,5 +1,6 @@
 import { Construct } from 'constructs';
 import { CfnTargetGroup, Protocol } from 'aws-cdk-lib/aws-elasticloadbalancingv2';
+import { CfnAutoScalingGroup } from 'aws-cdk-lib/aws-autoscaling';
 import { CfnLaunchTemplate, CfnSecurityGroup, CfnVPC } from 'aws-cdk-lib/aws-ec2';
 import { Fn } from 'aws-cdk-lib';
 import { Subnet } from './Subnet';
@@ -71,6 +72,19 @@ export class ALB extends Construct {
             port: 80,
             protocol: Protocol.HTTP,
             vpcId: vpc.ref,
+        })
+
+        // Auto Scaling group
+        const asg = new CfnAutoScalingGroup(this, 'asg', {
+            minSize: '1',
+            maxSize: '1',
+            autoScalingGroupName: 'asg-mp',
+            launchTemplate: {
+                version: launchTemplate.attrLatestVersionNumber,
+                launchTemplateId: launchTemplate.ref,
+            },
+            targetGroupArns: [tg.ref],
+            vpcZoneIdentifier: [subnets.webA.attrSubnetId, subnets.webB.attrSubnetId]
         })
 
     }
