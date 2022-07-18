@@ -17,29 +17,41 @@ export class SecurityGroup extends Construct {
             vpcId,
             groupDescription: `alb-sg`,
             groupName: `alb-sg`,
-            tags: [{ key:"Name", value: `alb-sg` }],
+            tags: [{ key: "Name", value: `alb-sg` }],
             securityGroupIngress: [{
                 cidrIp: '0.0.0.0/0',
                 description: 'Allow HTTP access from the internet',
                 ipProtocol: 'tcp',
                 fromPort: 80,
                 toPort: 80
-                }]
-            })
+            }, {
+                cidrIp: '0.0.0.0/0',
+                description: 'Allow HTTPS access from the internet',
+                ipProtocol: 'tcp',
+                fromPort: 443,
+                toPort: 443
+            }, {
+                cidrIp: '0.0.0.0/0',
+                description: 'Allow SSH access from the internet',
+                ipProtocol: 'tcp',
+                fromPort: 22,
+                toPort: 22
+            }]
+        })
 
         // Web Security Group
         this.web = new CfnSecurityGroup(this, `web-sg`, {
             vpcId,
             groupDescription: `web-sg`,
             groupName: `web-sg`,
-            tags: [{ key:"Name", value: `web-sg` }],
+            tags: [{ key: "Name", value: `web-sg` }],
             securityGroupIngress: [{
                 sourceSecurityGroupId: this.alb.attrGroupId,
                 description: 'Allow HTTP access from ALB Security Group',
                 ipProtocol: 'tcp',
                 fromPort: 80,
                 toPort: 80
-                }]
+            }]
         })
 
         // DB Security Group
@@ -47,14 +59,14 @@ export class SecurityGroup extends Construct {
             vpcId,
             groupDescription: `db-sg`,
             groupName: `db-sg`,
-            tags: [{ key:"Name", value: `db-sg` }],
+            tags: [{ key: "Name", value: `db-sg` }],
             securityGroupIngress: [{
                 sourceSecurityGroupId: this.web.attrGroupId,
                 description: 'Allow SQL access from Web security group',
                 ipProtocol: 'tcp',
                 fromPort: 3306,
                 toPort: 3306
-                }]
-            })
+            }]
+        })
     }
 }
