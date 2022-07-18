@@ -42,13 +42,13 @@ export class ALB extends Construct {
 
         // User Data script to copy DB endpoint to web folder
         const userData = Fn.base64(`#!/usr/bin/env bash
-curl -O https://streambox-cdi.s3-us-west-2.amazonaws.com/latest/linux/InstallSbxCDI.tgz
-tar xzf InstallSbxCDI.tgz
-cd InstallSbxCDI
-sudo ./installweb
-sudo ./installefa
-sudo ./installsbx
-sudo ./sanity_check`
+        curl -O https://streambox-cdi.s3-us-west-2.amazonaws.com/latest/linux/InstallSbxCDI.tgz
+        tar xzf InstallSbxCDI.tgz
+        cd InstallSbxCDI
+        ./installweb
+        ./installefa
+        ./installsbx
+        ./sanity_check`
         )
 
         // Launch Template
