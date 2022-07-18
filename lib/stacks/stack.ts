@@ -26,7 +26,6 @@ export class NetworkStack extends Stack {
     
     const alb = new ALB(this, 'ALB', { 
       websg: securityGroups.web, 
-      albsg: securityGroups.alb, 
       subnets, vpc, bucket 
       })
 

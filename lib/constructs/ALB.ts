@@ -10,7 +10,6 @@ import { Bucket } from 'aws-cdk-lib/aws-s3';
 
 interface ALBProps {
     websg: CfnSecurityGroup,
-    albsg: CfnSecurityGroup,
     subnets: Subnet,
     vpc: CfnVPC,
     bucket: Bucket
@@ -20,7 +19,7 @@ export class ALB extends Construct {
     constructor(scope: Construct, id: string, props: ALBProps) {
         super(scope, id)
 
-        const { vpc, bucket, subnets, websg, albsg } = props
+        const { vpc, bucket, subnets, websg } = props
 
         // Web AMI
         const imageId = 'ami-0cff7528ff583bf9a'
@@ -52,7 +51,7 @@ export class ALB extends Construct {
                 arn: webInstanceProfile.attrArn
             },
             networkInterfaces: [{
-                associatePublicIpAddress: false,
+                associatePublicIpAddress: true,
                 deviceIndex: 0,
                 groups: [websg.attrGroupId],
                 subnetId: subnets.webA.attrSubnetId,

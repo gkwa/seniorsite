@@ -17,8 +17,8 @@ export class SecurityGroup extends Construct {
             groupName: `web-sg`,
             tags: [{ key: "Name", value: `web-sg` }],
             securityGroupIngress: [{
-                sourceSecurityGroupId: this.alb.attrGroupId,
-                description: 'Allow HTTP access from ALB Security Group',
+                cidrIp: '0.0.0.0/0',
+                description: 'Allow HTTP access from the internet',
                 ipProtocol: 'tcp',
                 fromPort: 80,
                 toPort: 80
