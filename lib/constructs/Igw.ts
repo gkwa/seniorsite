@@ -14,10 +14,10 @@ export class IGW extends Construct {
         const { vpc } = props
 
         // Create Internet Gateway
-        this.igw = new CfnInternetGateway(this, `igw-mp`, { tags:[{key: "Name", value: `igw-mp`}] })
+        this.igw = new CfnInternetGateway(this, `igw-sbx-cdi`, { tags:[{key: "Name", value: `igw-sbx-cdi`}] })
 
         // Attach Internet Gateway
-        new CfnVPCGatewayAttachment(this, `vpcgw-mp`, {
+        new CfnVPCGatewayAttachment(this, `vpcgw-sbx-cdi`, {
             vpcId: vpc.ref,
             internetGatewayId: this.igw.ref
           })

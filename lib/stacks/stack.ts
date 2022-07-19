@@ -29,7 +29,7 @@ export class NetworkStack extends Stack {
 
     const instanceType = new ec2.InstanceType(instanceTypeParam.valueAsString)
 
-    const { vpc } = new VPC(this, 'vpc-mp')
+    const { vpc } = new VPC(this, 'vpc-sbx-cdi')
 
     const subnets = new Subnet(this, 'subnets', { vpc })
 
@@ -39,7 +39,7 @@ export class NetworkStack extends Stack {
 
     new RTable(this, 'rtables', { vpc, subnets, igw })
 
-    const { bucket } = new RDS(this, 'mp-rds', { subnets, sg: securityGroups })
+    const { bucket } = new RDS(this, 'sbx-cdi-rds', { subnets, sg: securityGroups })
 
     const cdi = new SBXCDI(this, 'CDI', {
       websg: securityGroups.web,
