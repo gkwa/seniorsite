@@ -22,9 +22,7 @@ export class SBXCDI extends Construct {
 
         const { vpc, bucket, subnets, websg } = props
 
-        const linux = new ec2.AmazonLinuxImage({
-            generation: ec2.AmazonLinuxGeneration.AMAZON_LINUX_2
-        });
+        const imageId = 'ami-0cff7528ff583bf9a'
 
         // Role for EC2 Instance Profile
         const role = new Role(this, 'webRole', {
@@ -54,7 +52,7 @@ cd InstallSbxCDI
 
         // Launch Template
         const launchTemplateData: CfnLaunchTemplate.LaunchTemplateDataProperty = {
-            imageId: linux.getImage.toString(),
+            imageId,
             instanceType: props.instanceType.toString(),
             iamInstanceProfile: {
                 arn: webInstanceProfile.attrArn
