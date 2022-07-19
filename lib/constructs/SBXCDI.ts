@@ -1,13 +1,15 @@
 import { Construct } from 'constructs';
-import { CfnLaunchTemplate, CfnSecurityGroup, CfnVPC } from 'aws-cdk-lib/aws-ec2';
+import { CfnLaunchTemplate, CfnSecurityGroup, CfnVPC, Instance, InstanceType } from 'aws-cdk-lib/aws-ec2';
 import { Fn } from 'aws-cdk-lib';
 import { Subnet } from './Subnet';
 import { CfnInstanceProfile, PolicyStatement, Role, ServicePrincipal } from 'aws-cdk-lib/aws-iam';
 import { Bucket } from 'aws-cdk-lib/aws-s3';
 import { aws_ec2 as ec2 } from 'aws-cdk-lib';
+import * as cdk from 'aws-cdk-lib';
 
 interface SBXCDIProps {
     websg: CfnSecurityGroup,
+    instanceType: ec2.InstanceType,
     subnets: Subnet,
     vpc: CfnVPC,
     bucket: Bucket
@@ -51,11 +53,12 @@ cd InstallSbxCDI
         // Launch Template
         const launchTemplateData: CfnLaunchTemplate.LaunchTemplateDataProperty = {
             imageId, // Amazon Linux 2 with Apache, PHP and the website 
-            instanceType: 't2.micro',
+            instanceType: props.instanceType.toString(),
             iamInstanceProfile: {
                 arn: webInstanceProfile.attrArn
             },
             networkInterfaces: [{
+                interfaceType: 'efa',
                 associatePublicIpAddress: true,
                 deviceIndex: 0,
                 groups: [websg.attrGroupId],
@@ -77,5 +80,11 @@ cd InstallSbxCDI
             },
             availabilityZone: subnets.webA.availabilityZone
         })
+
+        new cdk.CfnOutput(this, 'publicIp', {
+            value: instance1.attrPublicIp,
+            description: 'Instance Public Ip',
+            exportName: 'ec2-public-ip',
+        });
     }
 }

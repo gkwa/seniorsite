@@ -2,22 +2,16 @@
   "folders": [
     {
       "path": "."
-    },
-    {
-      "path": "../../tmp/bobbyhadz/aws-cdk-iam-policy-example"
     }
   ],
   "settings": {
     "files.exclude": {
-
       "**/*.js": {
         "when": "$(basename).ts"
       },
-
       "**/*.d.ts": {
         "when": "$(basename).ts"
       },
-
       "**/*.js.map": true
     }
   }
