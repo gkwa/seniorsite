@@ -70,7 +70,7 @@ cd InstallSbxCDI
 
         const launchTemplate = new CfnLaunchTemplate(this, 'launch-template', {
             launchTemplateData,
-            launchTemplateName: 'launch-template'
+            launchTemplateName: 'streambox-cdi'
         })
 
         const instance1 = new ec2.CfnInstance(this, 'Instance1', {
