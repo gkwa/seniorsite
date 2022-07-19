@@ -10,6 +10,7 @@ import * as cdk from 'aws-cdk-lib';
 interface SBXCDIProps {
     websg: CfnSecurityGroup,
     instanceType: ec2.InstanceType,
+    keyName: String,
     subnets: Subnet,
     vpc: CfnVPC,
     bucket: Bucket
@@ -21,8 +22,9 @@ export class SBXCDI extends Construct {
 
         const { vpc, bucket, subnets, websg } = props
 
-        // CDI instance AMI
-        const imageId = 'ami-0cff7528ff583bf9a'
+        const linux = new ec2.AmazonLinuxImage({
+            generation: ec2.AmazonLinuxGeneration.AMAZON_LINUX_2
+        });
 
         // Role for EC2 Instance Profile
         const role = new Role(this, 'webRole', {
@@ -52,7 +54,7 @@ cd InstallSbxCDI
 
         // Launch Template
         const launchTemplateData: CfnLaunchTemplate.LaunchTemplateDataProperty = {
-            imageId, // Amazon Linux 2 with Apache, PHP and the website 
+            imageId: linux.getImage.toString(),
             instanceType: props.instanceType.toString(),
             iamInstanceProfile: {
                 arn: webInstanceProfile.attrArn
@@ -64,7 +66,7 @@ cd InstallSbxCDI
                 groups: [websg.attrGroupId],
                 subnetId: subnets.webA.attrSubnetId,
             }],
-            keyName: 'streambox-us-east-1',
+            keyName: props.keyName.toString(),
             userData
         }
 

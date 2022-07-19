@@ -44,6 +44,7 @@ export class NetworkStack extends Stack {
     const cdi = new SBXCDI(this, 'CDI', {
       websg: securityGroups.web,
       instanceType: instanceType,
+      keyName: keyName.valueAsString,
       subnets, vpc, bucket
     })
 
