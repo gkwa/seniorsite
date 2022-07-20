@@ -3,7 +3,6 @@ import { CfnLaunchTemplate, CfnSecurityGroup, CfnVPC, Instance, InstanceType } f
 import { Fn } from 'aws-cdk-lib';
 import { Subnet } from './Subnet';
 import { CfnInstanceProfile, PolicyStatement, Role, ServicePrincipal } from 'aws-cdk-lib/aws-iam';
-import { Bucket } from 'aws-cdk-lib/aws-s3';
 import { aws_ec2 as ec2 } from 'aws-cdk-lib';
 import * as cdk from 'aws-cdk-lib';
 
@@ -13,14 +12,13 @@ interface SBXCDIProps {
     keyName: String,
     subnets: Subnet,
     vpc: CfnVPC,
-    bucket: Bucket
 }
 
 export class SBXCDI extends Construct {
     constructor(scope: Construct, id: string, props: SBXCDIProps) {
         super(scope, id)
 
-        const { bucket, subnets, websg } = props
+        const { subnets, websg } = props
         const ami = new ec2.AmazonLinuxImage({
             generation: ec2.AmazonLinuxGeneration.AMAZON_LINUX_2,
         })
@@ -30,11 +28,6 @@ export class SBXCDI extends Construct {
             assumedBy: new ServicePrincipal('ec2.amazonaws.com'),
             description: 'Role for CDI instances',
         });
-
-        role.addToPolicy(new PolicyStatement({
-            actions: ['s3:GetObject'],
-            resources: [`${bucket.bucketArn}/*`]
-        }))
 
         const webInstanceProfile = new CfnInstanceProfile(this, 'webInstanceProfile', {
             roles: [role.roleName],

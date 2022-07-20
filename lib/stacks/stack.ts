@@ -6,7 +6,6 @@ import { SecurityGroup } from '../constructs/SecurityGroup';
 import { IGW } from '../constructs/Igw';
 import { RTable } from '../constructs/RTable';
 import { SBXCDI } from '../constructs/SBXCDI';
-import { RDS } from '../constructs/RDS';
 import * as cdk from 'aws-cdk-lib';
 import * as ec2 from 'aws-cdk-lib/aws-ec2';
 
@@ -42,15 +41,11 @@ export class NetworkStack extends Stack {
 
     new RTable(this, 'rtables', { vpc, subnets, igw })
 
-    const { bucket } = new RDS(this, 'sbx-cdi-rds', { subnets, sg: securityGroups })
-
     const cdi = new SBXCDI(this, 'CDI', {
       websg: securityGroups.web,
       instanceType: instanceType,
       keyName: keyName.valueAsString,
-      subnets, vpc, bucket
+      subnets, vpc
     })
-
-    cdi.node.addDependency(bucket)
   }
 }
