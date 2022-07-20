@@ -13,6 +13,7 @@ s3tplendpoint=https://streambox-cdi.s3-us-west-2.amazonaws.com/latest/aws/$(base
 cd $basedir
 rm -rf $basedir/cdk.out
 cdk synth >/dev/null
+#cat $tpl1 | jq 'del(.Parameters.BootstrapVersion) | del(.Rules.CheckBootstrapVersion) | delpaths([paths | select(.[-1] | strings | startswith("SsmParam"))])' >$tpl2
 cat $tpl1 | jq 'del(.Parameters.BootstrapVersion) | del(.Rules.CheckBootstrapVersion)' >$tpl2
 PAGER=cat aws cloudformation validate-template --region us-east-1 --template-body file://$tpl2
 aws s3 cp $tpl2 $s3tpl --grants read=uri=http://acs.amazonaws.com/groups/global/AllUsers
