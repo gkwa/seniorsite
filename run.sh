@@ -2,8 +2,9 @@
 
 set -e
 
-name=NetworkStack
 basedir=/Users/mtm/pdev/taylormonacelli/seniorsite
+name=NetworkStack
+
 tpl1=$basedir/cdk.out/$name.template.json
 tpl2=$basedir/cdk.out/${name}-modified.template.json
 s3tpl=s3://streambox-cdi/latest/aws/$(basename $tpl2)

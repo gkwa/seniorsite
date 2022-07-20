@@ -41,7 +41,7 @@ export class SBXCDI extends Construct {
             instanceProfileName: 'webInstanceProfile',
         });
 
-        // User Data script to copy DB endpoint to web folder
+        // User Data script install streambox encoder/iris
         const userData = Fn.base64(`#!/usr/bin/env bash
 curl -O https://streambox-cdi.s3-us-west-2.amazonaws.com/latest/linux/InstallSbxCDI.tgz
 tar xzf InstallSbxCDI.tgz
