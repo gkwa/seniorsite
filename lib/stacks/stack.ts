@@ -14,13 +14,13 @@ export class NetworkStack extends Stack {
   constructor(scope: Construct, id: string, props?: StackProps) {
     super(scope, id, props);
 
-    const keyName = new cdk.CfnParameter(this, 'Key Name', {
+    const keyName = new cdk.CfnParameter(this, 'KeyName', {
       type: 'AWS::EC2::KeyPair::KeyName',
       allowedPattern: '.+',
       description: 'Name of an existing EC2 key pair to enable SSH access to the instances',
     });
 
-    const instanceTypeParam = new cdk.CfnParameter(this, 'Instance type', {
+    const instanceTypeParam = new cdk.CfnParameter(this, 'InstanceType', {
       type: 'String',
       description: 'EC2 instance type',
       default: 'c5n.9xlarge',
