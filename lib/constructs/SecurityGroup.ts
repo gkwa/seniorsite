@@ -11,6 +11,8 @@ export class SecurityGroup extends Construct {
         super(scope, id)
         const vpcId = props.vpc.ref
 
+
+
         let cfnSecurityGroup = new ec2.CfnSecurityGroup(this, 'MyCfnSecurityGroup', {
             groupDescription: `web-sg`,
             groupName: `web-sg`,
@@ -18,21 +20,39 @@ export class SecurityGroup extends Construct {
             vpcId
         });
 
-        let securityGroupIngress: CfnSecurityGroup.IngressProperty[] = [
-            {
-                ipProtocol: 'tcp',
-                cidrIp: '0.0.0.0/0',
-                description: 'Allow HTTP access from the internet',
-                fromPort: 80,
-                toPort: 80,
-                sourceSecurityGroupId: cfnSecurityGroup.ref
-            },
-            {
-                ipProtocol: '-1',
-                sourceSecurityGroupName: cfnSecurityGroup.groupName,
-                description: 'all traffic',
-            }
-        ];
+        new ec2.CfnSecurityGroupIngress(this, 'HTTP', {
+            groupId: cfnSecurityGroup.attrGroupId,
+            description: 'Allow HTTP access from the internet',
+            ipProtocol: 'tcp',
+            cidrIp: '0.0.0.0/0',
+            fromPort: 80,
+            toPort: 80,
+        });
+
+        new ec2.CfnSecurityGroupIngress(this, 'HTTPS', {
+            groupId: cfnSecurityGroup.attrGroupId,
+            description: 'Allow HTTPS access from the internet',
+            ipProtocol: 'tcp',
+            cidrIp: '0.0.0.0/0',
+            fromPort: 443,
+            toPort: 443,
+        });
+
+        new ec2.CfnSecurityGroupIngress(this, 'SSH', {
+            groupId: cfnSecurityGroup.attrGroupId,
+            description: 'Allow SSH access from the internet',
+            ipProtocol: 'tcp',
+            cidrIp: '0.0.0.0/0',
+            fromPort: 22,
+            toPort: 22,
+        });
+
+        new ec2.CfnSecurityGroupIngress(this, 'Enable EFA', {
+            groupId: cfnSecurityGroup.attrGroupId,
+            sourceSecurityGroupId: cfnSecurityGroup.attrGroupId,
+            description: 'Allow all traffic from myself',
+            ipProtocol: '-1',
+        });
 
         this.web = cfnSecurityGroup
     }
