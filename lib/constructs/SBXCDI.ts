@@ -43,13 +43,17 @@ export class SBXCDI extends Construct {
 
         // User Data script install streambox encoder/iris
         const userData = Fn.base64(`#!/usr/bin/env bash
+mkdir -p /opt/streambox
+cd /opt/streambox
 curl -O https://streambox-cdi.s3-us-west-2.amazonaws.com/latest/linux/InstallSbxCDI.tgz
 tar xzf InstallSbxCDI.tgz
 cd InstallSbxCDI
 ./installweb
 ./installefa
 ./installsbx
-./sanity_check`)
+./sanity_check
+/opt/streambox/InstallSbxCDI/aws-efa-installer/efa_test.sh
+`)
 
         // Launch Template
         const launchTemplateData: CfnLaunchTemplate.LaunchTemplateDataProperty = {
