@@ -34,7 +34,6 @@ export class SecurityGroup extends Construct {
             }
         ];
 
-        cfnSecurityGroup.securityGroupIngress = securityGroupIngress
         this.web = cfnSecurityGroup
     }
 }
