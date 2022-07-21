@@ -2,6 +2,9 @@
   "folders": [
     {
       "path": "."
+    },
+    {
+      "path": "../../tmp/bhavanij2/VC-IndSysProjects"
     }
   ],
   "settings": {
