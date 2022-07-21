@@ -1,5 +1,6 @@
 import { CfnSecurityGroup, CfnVPC, Vpc } from "aws-cdk-lib/aws-ec2";
 import { Construct } from "constructs";
+import { aws_ec2 as ec2 } from 'aws-cdk-lib';
 
 interface SGProps { vpc: CfnVPC }
 
@@ -9,6 +10,14 @@ export class SecurityGroup extends Construct {
     constructor(scope: Construct, id: string, props: SGProps) {
         super(scope, id)
         const vpcId = props.vpc.ref
+
+        const webserverSG = new ec2.SecurityGroup(this, 'web-server-sg', {
+            vpc,
+            allowAllOutbound: true,
+            description: 'security group for a web server',
+          });
+
+
 
         // Web Security Group
         this.web = new CfnSecurityGroup(this, `web-sg`, {
