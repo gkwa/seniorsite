@@ -19,9 +19,9 @@ export class SBXCDI extends Construct {
         super(scope, id)
 
         const { subnets, websg } = props
-        const ami = new ec2.AmazonLinuxImage({
-            generation: ec2.AmazonLinuxGeneration.AMAZON_LINUX_2,
-        })
+
+        // amzn2-ami-kernel-5.10-hvm-2.0.20220606.1-x86_64-gp2
+        const amiId = 'ami-0cff7528ff583bf9a'
 
         // Role for EC2 Instance Profile
         const role = new Role(this, 'webRole', {
@@ -36,8 +36,7 @@ export class SBXCDI extends Construct {
 
         // User Data script install streambox encoder/iris
         const userData = Fn.base64(`#!/usr/bin/env bash
-mkdir -p /opt/streambox
-cd /opt/streambox
+set -x
 curl -O https://streambox-cdi.s3-us-west-2.amazonaws.com/latest/linux/InstallSbxCDI.tgz
 tar xzf InstallSbxCDI.tgz
 cd InstallSbxCDI
@@ -45,12 +44,12 @@ cd InstallSbxCDI
 ./installefa
 ./installsbx
 ./sanity_check
-/opt/streambox/InstallSbxCDI/aws-efa-installer/efa_test.sh
+./aws-efa-installer/efa_test.sh
 `)
 
         // Launch Template
         const launchTemplateData: CfnLaunchTemplate.LaunchTemplateDataProperty = {
-            imageId: ami.getImage(this).imageId,
+            imageId: amiId,
             instanceType: props.instanceType.toString(),
             iamInstanceProfile: {
                 arn: webInstanceProfile.attrArn
