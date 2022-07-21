@@ -11,28 +11,30 @@ export class SecurityGroup extends Construct {
         super(scope, id)
         const vpcId = props.vpc.ref
 
-        const cfnSecurityGroup = new ec2.CfnSecurityGroup(this, 'MyCfnSecurityGroup', {
+        let cfnSecurityGroup = new ec2.CfnSecurityGroup(this, 'MyCfnSecurityGroup', {
             groupDescription: `web-sg`,
             groupName: `web-sg`,
             tags: [{ key: "Name", value: `web-sg` }],
             vpcId
         });
 
-        const webIngressProperty: ec2.CfnSecurityGroup.IngressProperty = {
-            ipProtocol: 'tcp',
-            cidrIp: '0.0.0.0/0',
-            description: 'Allow HTTP access from the internet',
-            fromPort: 80,
-            toPort: 80,
-            sourceSecurityGroupId: cfnSecurityGroup.ref
-        };
+        let securityGroupIngress: CfnSecurityGroup.IngressProperty[] = [
+            {
+                ipProtocol: 'tcp',
+                cidrIp: '0.0.0.0/0',
+                description: 'Allow HTTP access from the internet',
+                fromPort: 80,
+                toPort: 80,
+                sourceSecurityGroupId: cfnSecurityGroup.ref
+            },
+            {
+                ipProtocol: '-1',
+                sourceSecurityGroupName: cfnSecurityGroup.groupName,
+                description: 'all traffic',
+            }
+        ];
 
-        const webIngressProperty2: ec2.CfnSecurityGroup.IngressProperty = {
-            ipProtocol: '-1',
-            sourceSecurityGroupName: cfnSecurityGroup.groupName,
-            description: 'all traffic',
-        };
-
+        cfnSecurityGroup.securityGroupIngress = securityGroupIngress
         this.web = cfnSecurityGroup
     }
 }
