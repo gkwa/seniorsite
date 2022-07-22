@@ -61,7 +61,7 @@ PATH=/opt/amazon/efa/bin:$PATH /opt/sbx/InstallSbxCDI/aws-efa-installer/efa_test
                 associatePublicIpAddress: true,
                 deviceIndex: 0,
                 groups: [websg.attrGroupId],
-                subnetId: subnets.webA.attrSubnetId,
+                subnetId: subnets.web.attrSubnetId,
             }],
             keyName: props.keyName.toString(),
             userData
@@ -77,7 +77,7 @@ PATH=/opt/amazon/efa/bin:$PATH /opt/sbx/InstallSbxCDI/aws-efa-installer/efa_test
                 launchTemplateId: launchTemplate.ref,
                 version: launchTemplate.attrLatestVersionNumber,
             },
-            availabilityZone: subnets.webA.availabilityZone
+            availabilityZone: subnets.web.availabilityZone
         })
         cdk.Tags.of(instance1).add('Name', 'sbx-cdi');
 

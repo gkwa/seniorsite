@@ -29,9 +29,9 @@ export class RTable extends Construct {
         })
 
         // Associate Route Table to both web subnets
-        new CfnSubnetRouteTableAssociation(this, `webA-srta`, {
+        new CfnSubnetRouteTableAssociation(this, `web-srta`, {
             routeTableId: webrt.attrRouteTableId,
-            subnetId: subnets.webA.attrSubnetId
+            subnetId: subnets.web.attrSubnetId
         })
     }
 }

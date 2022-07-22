@@ -6,19 +6,19 @@ interface propsSubnet {
 }
 
 export class Subnet extends Construct {
-    public readonly webA: CfnSubnet
+    public readonly web: CfnSubnet
 
     constructor(scope: Construct, id: string, props: propsSubnet) {
         super(scope, id)
 
         const vpcId = props.vpc.ref
         // Web subnets
-        this.webA = new CfnSubnet(this, `webA-subnet`, {
+        this.web = new CfnSubnet(this, `web-subnet`, {
             availabilityZone: 'us-east-1a',
             cidrBlock: "10.0.0.0/24",
             vpcId,
             mapPublicIpOnLaunch: false,
-            tags: [{ key: 'Name', value: `webA-subnet` }]
+            tags: [{ key: 'Name', value: `web-subnet` }]
         })
     }
 }
