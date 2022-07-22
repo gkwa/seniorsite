@@ -54,14 +54,14 @@ export class SecurityGroup extends Construct {
             ipProtocol: '-1',
         });
 
-        new ec2.CfnSecurityGroupEgress(this, 'Enable EFA egress', {
+        new ec2.CfnSecurityGroupEgress(this, 'enable EFA egress', {
             groupId: cfnSecurityGroup.attrGroupId,
             destinationSecurityGroupId: cfnSecurityGroup.attrGroupId,
             description: 'Allow all traffic from myself',
             ipProtocol: '-1',
         });
 
-        new ec2.CfnSecurityGroupEgress(this, 'Enable All outbound egress', {
+        new ec2.CfnSecurityGroupEgress(this, 'enable all outbound egress', {
             groupId: cfnSecurityGroup.attrGroupId,
             description: 'Allow all traffic out',
             ipProtocol: '-1',

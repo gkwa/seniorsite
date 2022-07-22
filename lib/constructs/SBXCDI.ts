@@ -37,14 +37,16 @@ export class SBXCDI extends Construct {
         // User Data script install streambox encoder/iris
         const userData = Fn.base64(`#!/usr/bin/env bash
 set -x
-curl -O https://streambox-cdi.s3-us-west-2.amazonaws.com/latest/linux/InstallSbxCDI.tgz
-tar xzf InstallSbxCDI.tgz
-cd InstallSbxCDI
-./installweb
-./installefa
-./installsbx
-./sanity_check
-./aws-efa-installer/efa_test.sh
+set -e
+mkdir -p /opt/sbx
+curl -o /opt/sbx/InstallSbxCDI.tgz https://streambox-cdi.s3-us-west-2.amazonaws.com/latest/linux/InstallSbxCDI.tgz
+tar xzf /opt/sbx/InstallSbxCDI.tgz -C /opt/sbx
+cd /opt/sbx/InstallSbxCDI
+/opt/sbx/InstallSbxCDI/installweb
+/opt/sbx/InstallSbxCDI/installefa
+/opt/sbx/InstallSbxCDI/installsbx
+/opt/sbx/InstallSbxCDI/sanity_check
+PATH=/opt/amazon/efa/bin:$PATH /opt/sbx/InstallSbxCDI/aws-efa-installer/efa_test.sh
 `)
 
         // Launch Template
