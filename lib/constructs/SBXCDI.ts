@@ -62,6 +62,7 @@ PATH=/opt/amazon/efa/bin:$PATH /opt/sbx/InstallSbxCDI/aws-efa-installer/efa_test
                 deviceIndex: 0,
                 groups: [websg.attrGroupId],
                 subnetId: subnets.web.attrSubnetId,
+
             }],
             keyName: props.keyName.toString(),
             userData
@@ -69,7 +70,7 @@ PATH=/opt/amazon/efa/bin:$PATH /opt/sbx/InstallSbxCDI/aws-efa-installer/efa_test
 
         const launchTemplate = new CfnLaunchTemplate(this, 'launch-template', {
             launchTemplateData,
-            launchTemplateName: 'streambox-cdi'
+            launchTemplateName: 'sbx-cdi'
         })
 
         const instance1 = new ec2.CfnInstance(this, 'Instance1', {
