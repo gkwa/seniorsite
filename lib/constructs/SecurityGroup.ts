@@ -47,11 +47,25 @@ export class SecurityGroup extends Construct {
             toPort: 22,
         });
 
-        new ec2.CfnSecurityGroupIngress(this, 'Enable EFA', {
+        new ec2.CfnSecurityGroupIngress(this, 'Enable EFA Ingress', {
             groupId: cfnSecurityGroup.attrGroupId,
             sourceSecurityGroupId: cfnSecurityGroup.attrGroupId,
             description: 'Allow all traffic from myself',
             ipProtocol: '-1',
+        });
+
+        new ec2.CfnSecurityGroupEgress(this, 'Enable EFA egress', {
+            groupId: cfnSecurityGroup.attrGroupId,
+            destinationSecurityGroupId: cfnSecurityGroup.attrGroupId,
+            description: 'Allow all traffic from myself',
+            ipProtocol: '-1',
+        });
+
+        new ec2.CfnSecurityGroupEgress(this, 'Enable All outbound egress', {
+            groupId: cfnSecurityGroup.attrGroupId,
+            description: 'Allow all traffic out',
+            ipProtocol: '-1',
+            cidrIp: '0.0.0.0/0',
         });
 
         this.web = cfnSecurityGroup
