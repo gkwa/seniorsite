@@ -79,6 +79,7 @@ PATH=/opt/amazon/efa/bin:$PATH /opt/sbx/InstallSbxCDI/aws-efa-installer/efa_test
             },
             availabilityZone: subnets.webA.availabilityZone
         })
+        cdk.Tags.of(instance1).add('Name', 'sbx-cdi');
 
         new cdk.CfnOutput(this, 'publicIp', {
             value: instance1.attrPublicIp,
