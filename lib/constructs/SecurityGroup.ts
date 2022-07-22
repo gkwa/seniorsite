@@ -11,8 +11,6 @@ export class SecurityGroup extends Construct {
         super(scope, id)
         const vpcId = props.vpc.ref
 
-
-
         let cfnSecurityGroup = new ec2.CfnSecurityGroup(this, 'MyCfnSecurityGroup', {
             groupDescription: `web-sg`,
             groupName: `web-sg`,
