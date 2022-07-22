@@ -53,7 +53,7 @@ export class ALB extends Construct {
             },
             networkInterfaces: [{
                 interfaceType: 'efa',
-                associatePublicIpAddress: false,
+                associatePublicIpAddress: true,
                 deviceIndex: 0,
                 groups: [websg.attrGroupId],
                 subnetId: subnets.webA.attrSubnetId,
