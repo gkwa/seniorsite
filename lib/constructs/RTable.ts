@@ -10,7 +10,7 @@ interface RTProps {
 }
 
 export class RTable extends Construct {
-    constructor(scope: Construct, id: string, props: RTProps){
+    constructor(scope: Construct, id: string, props: RTProps) {
         super(scope, id)
 
         const { vpc, subnets, igw } = props
@@ -18,9 +18,14 @@ export class RTable extends Construct {
         // Route Table
         const webrt = new CfnRouteTable(this, `web-rtable`, {
             vpcId: vpc.ref,
-            tags: [{key:"Name", value: `web-rtable`}]
+            tags: [{ key: "Name", value: `web-rtable` }]
         })
-        
+
+        new CfnSubnetRouteTableAssociation(this, `webB-srta`, {
+            routeTableId: webrt.attrRouteTableId,
+            subnetId: subnets.webB.attrSubnetId
+        })
+
         // Add route
         new CfnRoute(this, `web-route`, {
             routeTableId: webrt.attrRouteTableId,
