@@ -29,6 +29,11 @@ export class SBXCDI extends Construct {
             description: 'Role for CDI instances',
         });
 
+        role.addToPolicy(new PolicyStatement({
+            actions: ['mediaconnect:*'],
+            resources: ['*']
+        }))
+
         const webInstanceProfile = new CfnInstanceProfile(this, 'webInstanceProfile', {
             roles: [role.roleName],
             instanceProfileName: 'webInstanceProfile',
