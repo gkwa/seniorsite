@@ -18,6 +18,15 @@ export class SecurityGroup extends Construct {
             vpcId
         });
 
+        new ec2.CfnSecurityGroupIngress(this, 'ACTL3', {
+            groupId: cfnSecurityGroup.attrGroupId,
+            description: 'Allow ACT-L3 inbound',
+            ipProtocol: 'udp',
+            cidrIp: '0.0.0.0/0',
+            fromPort: 1770,
+            toPort: 1790,
+        });
+
         new ec2.CfnSecurityGroupIngress(this, 'HTTP', {
             groupId: cfnSecurityGroup.attrGroupId,
             description: 'Allow HTTP access from the internet',
