@@ -13,7 +13,8 @@ export class Subnet extends Construct {
         super(scope, id)
 
         const vpcId = props.vpc.ref
-        // Web subnets
+
+        // CDI subnets
         this.web = new CfnSubnet(this, `cdiA-subnet`, {
             availabilityZone: 'us-east-1a',
             cidrBlock: "10.0.0.0/24",
