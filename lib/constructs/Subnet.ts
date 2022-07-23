@@ -14,12 +14,12 @@ export class Subnet extends Construct {
 
         const vpcId = props.vpc.ref
         // Web subnets
-        this.web = new CfnSubnet(this, `web-subnet`, {
+        this.web = new CfnSubnet(this, `webA-subnet`, {
             availabilityZone: 'us-east-1a',
             cidrBlock: "10.0.0.0/24",
             vpcId,
             mapPublicIpOnLaunch: false,
-            tags: [{ key: 'Name', value: `web-subnet` }]
+            tags: [{ key: 'Name', value: `webA-subnet` }]
         })
 
         this.webB = new CfnSubnet(this, `webB-subnet`, {
