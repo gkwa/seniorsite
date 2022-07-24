@@ -20,8 +20,9 @@ export class SBXCDI extends Construct {
 
         const { subnets, websg } = props
 
-        // amzn2-ami-kernel-5.10-hvm-2.0.20220606.1-x86_64-gp2
-        const amiId = 'ami-0cff7528ff583bf9a'
+        const ami = new ec2.AmazonLinuxImage({
+            generation: ec2.AmazonLinuxGeneration.AMAZON_LINUX_2,
+        })
 
         // Role for EC2 Instance Profile
         const role = new Role(this, 'webRole', {
@@ -56,7 +57,7 @@ PATH=/opt/amazon/efa/bin:$PATH /opt/sbx/InstallSbxCDI/aws-efa-installer/efa_test
 
         // Launch Template
         const launchTemplateData: CfnLaunchTemplate.LaunchTemplateDataProperty = {
-            imageId: amiId,
+            imageId: ami.getImage(this).imageId,
             instanceType: props.instanceType.toString(),
             iamInstanceProfile: {
                 arn: webInstanceProfile.attrArn

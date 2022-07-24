@@ -1,5 +1,6 @@
 import { CfnSubnet, CfnVPC } from "aws-cdk-lib/aws-ec2";
 import { Construct } from "constructs";
+import * as cdk from 'aws-cdk-lib';
 
 interface propsSubnet {
     vpc: CfnVPC
@@ -16,7 +17,7 @@ export class Subnet extends Construct {
 
         // CDI subnets
         this.web = new CfnSubnet(this, `cdiA-subnet`, {
-            availabilityZone: 'us-east-1a',
+            availabilityZone: cdk.Stack.of(this).availabilityZones[0],
             cidrBlock: "10.0.0.0/24",
             vpcId,
             mapPublicIpOnLaunch: false,
@@ -24,7 +25,7 @@ export class Subnet extends Construct {
         })
 
         this.webB = new CfnSubnet(this, `cdiB-subnet`, {
-            availabilityZone: 'us-east-1b',
+            availabilityZone: cdk.Stack.of(this).availabilityZones[1],
             cidrBlock: "10.0.1.0/24",
             vpcId,
             mapPublicIpOnLaunch: false,
