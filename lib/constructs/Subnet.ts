@@ -7,8 +7,8 @@ interface propsSubnet {
 }
 
 export class Subnet extends Construct {
-    public readonly web: CfnSubnet
-    public readonly webB: CfnSubnet
+    public readonly cdiA: CfnSubnet
+    public readonly cdiB: CfnSubnet
 
     constructor(scope: Construct, id: string, props: propsSubnet) {
         super(scope, id)
@@ -16,20 +16,20 @@ export class Subnet extends Construct {
         const vpcId = props.vpc.ref
 
         // CDI subnets
-        this.web = new CfnSubnet(this, `cdiA-subnet`, {
+        this.cdiA = new CfnSubnet(this, `cdi-a`, {
             availabilityZone: cdk.Stack.of(this).availabilityZones[0],
             cidrBlock: "10.0.0.0/24",
             vpcId,
             mapPublicIpOnLaunch: false,
-            tags: [{ key: 'Name', value: `cdiA-subnet` }]
+            tags: [{ key: 'Name', value: `cdi-a` }]
         })
 
-        this.webB = new CfnSubnet(this, `cdiB-subnet`, {
+        this.cdiB = new CfnSubnet(this, `cdi-b`, {
             availabilityZone: cdk.Stack.of(this).availabilityZones[1],
             cidrBlock: "10.0.1.0/24",
             vpcId,
             mapPublicIpOnLaunch: false,
-            tags: [{ key: 'Name', value: `cdiB-subnet` }]
+            tags: [{ key: 'Name', value: `cdi-b` }]
         })
     }
 }

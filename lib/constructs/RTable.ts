@@ -16,27 +16,27 @@ export class RTable extends Construct {
         const { vpc, subnets, igw } = props
 
         // Route Table
-        const webrt = new CfnRouteTable(this, `web-rtable`, {
+        const webrt = new CfnRouteTable(this, `cdiA-rtable`, {
             vpcId: vpc.ref,
-            tags: [{ key: "Name", value: `web-rtable` }]
+            tags: [{ key: "Name", value: `cdiA-rtable` }]
         })
 
-        new CfnSubnetRouteTableAssociation(this, `webB-srta`, {
+        new CfnSubnetRouteTableAssociation(this, `cdiB-srta`, {
             routeTableId: webrt.attrRouteTableId,
-            subnetId: subnets.webB.attrSubnetId
+            subnetId: subnets.cdiB.attrSubnetId
         })
 
         // Add route
-        new CfnRoute(this, `web-route`, {
+        new CfnRoute(this, `cdiA-route`, {
             routeTableId: webrt.attrRouteTableId,
             destinationCidrBlock: '0.0.0.0/0',
             gatewayId: igw.igw.ref
         })
 
         // Associate Route Table to both web subnets
-        new CfnSubnetRouteTableAssociation(this, `web-srta`, {
+        new CfnSubnetRouteTableAssociation(this, `cdiA-srta`, {
             routeTableId: webrt.attrRouteTableId,
-            subnetId: subnets.web.attrSubnetId
+            subnetId: subnets.cdiA.attrSubnetId
         })
     }
 }
