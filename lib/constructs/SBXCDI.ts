@@ -1,5 +1,5 @@
 import { Construct } from 'constructs';
-import { CfnLaunchTemplate, CfnSecurityGroup, CfnVPC, Instance, InstanceType } from 'aws-cdk-lib/aws-ec2';
+import { CfnLaunchTemplate, CfnSecurityGroup, CfnVPC } from 'aws-cdk-lib/aws-ec2';
 import { Fn } from 'aws-cdk-lib';
 import { Subnet } from './Subnet';
 import { CfnInstanceProfile, PolicyStatement, Role, ServicePrincipal } from 'aws-cdk-lib/aws-iam';
@@ -7,7 +7,7 @@ import { aws_ec2 as ec2 } from 'aws-cdk-lib';
 import * as cdk from 'aws-cdk-lib';
 
 interface SBXCDIProps {
-    websg: CfnSecurityGroup,
+    cdisg: CfnSecurityGroup,
     instanceType: ec2.InstanceType,
     keyName: String,
     subnets: Subnet,
@@ -18,14 +18,14 @@ export class SBXCDI extends Construct {
     constructor(scope: Construct, id: string, props: SBXCDIProps) {
         super(scope, id)
 
-        const { subnets, websg } = props
+        const { subnets, cdisg } = props
 
         const ami = new ec2.AmazonLinuxImage({
             generation: ec2.AmazonLinuxGeneration.AMAZON_LINUX_2,
         })
 
         // Role for EC2 Instance Profile
-        const role = new Role(this, 'webRole', {
+        const role = new Role(this, 'cdiRole', {
             assumedBy: new ServicePrincipal('ec2.amazonaws.com'),
             description: 'Role for CDI instances',
         });
@@ -35,9 +35,9 @@ export class SBXCDI extends Construct {
             resources: ['*']
         }))
 
-        const webInstanceProfile = new CfnInstanceProfile(this, 'webInstanceProfile', {
+        const cdiInstanceProfile = new CfnInstanceProfile(this, 'cdiInstanceProfile', {
             roles: [role.roleName],
-            instanceProfileName: 'webInstanceProfile',
+            instanceProfileName: 'cdiInstanceProfile',
         });
 
         // User Data script install streambox encoder/iris
@@ -60,13 +60,13 @@ PATH=/opt/amazon/efa/bin:$PATH /opt/sbx/InstallSbxCDI/aws-efa-installer/efa_test
             imageId: ami.getImage(this).imageId,
             instanceType: props.instanceType.toString(),
             iamInstanceProfile: {
-                arn: webInstanceProfile.attrArn
+                arn: cdiInstanceProfile.attrArn
             },
             networkInterfaces: [{
                 interfaceType: 'efa',
                 associatePublicIpAddress: true,
                 deviceIndex: 0,
-                groups: [websg.attrGroupId],
+                groups: [cdisg.attrGroupId],
                 subnetId: subnets.cdiA.attrSubnetId,
 
             }],

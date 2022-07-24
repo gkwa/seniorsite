@@ -42,7 +42,7 @@ export class NetworkStack extends Stack {
     new RTable(this, 'rtables', { vpc, subnets, igw })
 
     const cdi = new SBXCDI(this, 'CDI', {
-      websg: securityGroups.web,
+      cdisg: securityGroups.cdi,
       instanceType: instanceType,
       keyName: keyName.valueAsString,
       subnets, vpc

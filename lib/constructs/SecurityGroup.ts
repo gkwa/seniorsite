@@ -5,7 +5,7 @@ import { aws_ec2 as ec2 } from 'aws-cdk-lib';
 interface SGProps { vpc: CfnVPC }
 
 export class SecurityGroup extends Construct {
-    public readonly web: CfnSecurityGroup
+    public readonly cdi: CfnSecurityGroup
 
     constructor(scope: Construct, id: string, props: SGProps) {
         super(scope, id)
@@ -75,6 +75,6 @@ export class SecurityGroup extends Construct {
             cidrIp: '0.0.0.0/0',
         });
 
-        this.web = cfnSecurityGroup
+        this.cdi = cfnSecurityGroup
     }
 }
