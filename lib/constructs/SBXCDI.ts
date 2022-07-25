@@ -28,6 +28,7 @@ export class SBXCDI extends Construct {
         const role = new Role(this, 'cdiRole', {
             assumedBy: new ServicePrincipal('ec2.amazonaws.com'),
             description: 'Role for CDI instances',
+            roleName: `cdiRole-${cdk.Stack.of(this).region}`,
         });
 
         role.addToPolicy(
@@ -39,7 +40,7 @@ export class SBXCDI extends Construct {
 
         const cdiInstanceProfile = new CfnInstanceProfile(this, 'cdiInstanceProfile', {
             roles: [role.roleName],
-            instanceProfileName: 'cdiInstanceProfile',
+            instanceProfileName: `cdiInstanceProfile-${cdk.Stack.of(this).region}`,
         });
 
         // User Data script install streambox encoder/iris
