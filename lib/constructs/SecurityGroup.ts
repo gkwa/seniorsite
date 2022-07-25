@@ -1,21 +1,23 @@
-import { CfnSecurityGroup, CfnVPC, Vpc } from "aws-cdk-lib/aws-ec2";
-import { Construct } from "constructs";
+import { CfnSecurityGroup, CfnVPC, Vpc } from 'aws-cdk-lib/aws-ec2';
+import { Construct } from 'constructs';
 import { aws_ec2 as ec2 } from 'aws-cdk-lib';
 
-interface SGProps { vpc: CfnVPC }
+interface SGProps {
+    vpc: CfnVPC;
+}
 
 export class SecurityGroup extends Construct {
-    public readonly cdi: CfnSecurityGroup
+    public readonly cdi: CfnSecurityGroup;
 
     constructor(scope: Construct, id: string, props: SGProps) {
-        super(scope, id)
-        const vpcId = props.vpc.ref
+        super(scope, id);
+        const vpcId = props.vpc.ref;
 
         let cfnSecurityGroup = new ec2.CfnSecurityGroup(this, 'MyCfnSecurityGroup', {
             groupDescription: `sbx-cdi`,
             groupName: `sbx-cdi`,
-            tags: [{ key: "Name", value: `sbx-cdi` }],
-            vpcId
+            tags: [{ key: 'Name', value: `sbx-cdi` }],
+            vpcId,
         });
 
         new ec2.CfnSecurityGroupIngress(this, 'ACTL3', {
@@ -75,6 +77,6 @@ export class SecurityGroup extends Construct {
             cidrIp: '0.0.0.0/0',
         });
 
-        this.cdi = cfnSecurityGroup
+        this.cdi = cfnSecurityGroup;
     }
 }

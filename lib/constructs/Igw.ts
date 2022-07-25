@@ -1,25 +1,27 @@
-import { CfnInternetGateway, CfnVPCGatewayAttachment, CfnVPC } from "aws-cdk-lib/aws-ec2";
-import { Construct } from "constructs";
+import { CfnInternetGateway, CfnVPCGatewayAttachment, CfnVPC } from 'aws-cdk-lib/aws-ec2';
+import { Construct } from 'constructs';
 
 interface IGWProps {
-    vpc: CfnVPC
+    vpc: CfnVPC;
 }
 
 export class IGW extends Construct {
-    public readonly igw: CfnInternetGateway
+    public readonly igw: CfnInternetGateway;
 
-    constructor(scope: Construct, id: string, props: IGWProps){
-        super(scope, id)
+    constructor(scope: Construct, id: string, props: IGWProps) {
+        super(scope, id);
 
-        const { vpc } = props
+        const { vpc } = props;
 
         // Create Internet Gateway
-        this.igw = new CfnInternetGateway(this, `igw-sbx-cdi`, { tags:[{key: "Name", value: `igw-sbx-cdi`}] })
+        this.igw = new CfnInternetGateway(this, `igw-sbx-cdi`, {
+            tags: [{ key: 'Name', value: `igw-sbx-cdi` }],
+        });
 
         // Attach Internet Gateway
         new CfnVPCGatewayAttachment(this, `vpcgw-sbx-cdi`, {
             vpcId: vpc.ref,
-            internetGatewayId: this.igw.ref
-          })
+            internetGatewayId: this.igw.ref,
+        });
     }
 }
