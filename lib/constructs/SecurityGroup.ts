@@ -29,6 +29,15 @@ export class SecurityGroup extends Construct {
             toPort: 1790,
         });
 
+        new ec2.CfnSecurityGroupIngress(this, 'ACTL3', {
+            groupId: cfnSecurityGroup.attrGroupId,
+            description: 'Allow ACT-L3 inbound',
+            ipProtocol: 'tcp',
+            cidrIp: '0.0.0.0/0',
+            fromPort: 1770,
+            toPort: 1790,
+        });
+
         new ec2.CfnSecurityGroupIngress(this, 'HTTP', {
             groupId: cfnSecurityGroup.attrGroupId,
             description: 'Allow HTTP access from the internet',
@@ -63,14 +72,14 @@ export class SecurityGroup extends Construct {
             ipProtocol: '-1',
         });
 
-        new ec2.CfnSecurityGroupEgress(this, 'enable EFA egress', {
+        new ec2.CfnSecurityGroupEgress(this, 'Enable EFA egress', {
             groupId: cfnSecurityGroup.attrGroupId,
             destinationSecurityGroupId: cfnSecurityGroup.attrGroupId,
             description: 'Allow all traffic from myself',
             ipProtocol: '-1',
         });
 
-        new ec2.CfnSecurityGroupEgress(this, 'enable all outbound egress', {
+        new ec2.CfnSecurityGroupEgress(this, 'Enable all outbound egress', {
             groupId: cfnSecurityGroup.attrGroupId,
             description: 'Allow all traffic out',
             ipProtocol: '-1',
