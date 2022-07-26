@@ -48,7 +48,7 @@ export class SBXCDI extends Construct {
 set -x
 set -e
 mkdir -p /opt/sbx
-curl -o /opt/sbx/InstallSbxCDI.tgz https://streambox-cdi.s3-us-west-2.amazonaws.com/latest/linux/InstallSbxCDI.tgz
+curl -o /opt/sbx/InstallSbxCDI.tgz https://streambox-cdi.s3-us-west-2.amazonaws.com/linux/0.11.0/InstallSbxCDI.tgz
 tar xzf /opt/sbx/InstallSbxCDI.tgz -C /opt/sbx
 cd /opt/sbx/InstallSbxCDI
 /opt/sbx/InstallSbxCDI/installweb
