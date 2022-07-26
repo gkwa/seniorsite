@@ -20,7 +20,7 @@ export class SecurityGroup extends Construct {
             vpcId,
         });
 
-        new ec2.CfnSecurityGroupIngress(this, 'ACTL3 UDP', {
+        new ec2.CfnSecurityGroupIngress(this, 'ACTL3', {
             groupId: cfnSecurityGroup.attrGroupId,
             description: 'Allow ACT-L3 inbound',
             ipProtocol: 'udp',
@@ -29,7 +29,7 @@ export class SecurityGroup extends Construct {
             toPort: 1790,
         });
 
-        new ec2.CfnSecurityGroupIngress(this, 'ACTL3 TCP', {
+        new ec2.CfnSecurityGroupIngress(this, 'ACTL3', {
             groupId: cfnSecurityGroup.attrGroupId,
             description: 'Allow ACT-L3 inbound',
             ipProtocol: 'tcp',
