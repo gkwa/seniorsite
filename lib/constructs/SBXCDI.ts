@@ -2,8 +2,8 @@ import { Construct } from 'constructs';
 import { CfnLaunchTemplate, CfnSecurityGroup, CfnVPC } from 'aws-cdk-lib/aws-ec2';
 import { aws_ec2 as ec2, Fn } from 'aws-cdk-lib';
 import { CfnInstanceProfile, PolicyStatement, Role, ServicePrincipal } from 'aws-cdk-lib/aws-iam';
-import * as cdk from 'aws-cdk-lib';
 import { Subnet } from './Subnet';
+import * as cdk from 'aws-cdk-lib';
 
 interface SBXCDIProps {
     cdisg: CfnSecurityGroup;
