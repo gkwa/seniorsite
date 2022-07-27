@@ -8,12 +8,12 @@ export class VPC extends Construct {
         super(scope, id);
 
         // VPC
-        this.vpc = new CfnVPC(this, `vpc`, {
+        this.vpc = new CfnVPC(this, 'vpc', {
             cidrBlock: '10.0.0.0/16',
             enableDnsHostnames: true,
             enableDnsSupport: true,
             instanceTenancy: 'default',
-            tags: [{ key: 'Name', value: `vpc-sbx-cdi` }],
+            tags: [{ key: 'Name', value: 'vpc-sbx-cdi' }],
         });
     }
 }

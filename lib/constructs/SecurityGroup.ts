@@ -13,10 +13,10 @@ export class SecurityGroup extends Construct {
         super(scope, id);
         const vpcId = props.vpc.ref;
 
-        let cfnSecurityGroup = new ec2.CfnSecurityGroup(this, 'MyCfnSecurityGroup', {
-            groupDescription: `sbx-cdi`,
-            groupName: `sbx-cdi`,
-            tags: [{ key: 'Name', value: `sbx-cdi` }],
+        const cfnSecurityGroup = new ec2.CfnSecurityGroup(this, 'MyCfnSecurityGroup', {
+            groupDescription: 'sbx-cdi',
+            groupName: 'sbx-cdi',
+            tags: [{ key: 'Name', value: 'sbx-cdi' }],
             vpcId,
         });
 
