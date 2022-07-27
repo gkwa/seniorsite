@@ -1,4 +1,4 @@
-import { CfnInternetGateway, CfnVPCGatewayAttachment, CfnVPC } from 'aws-cdk-lib/aws-ec2';
+import { CfnInternetGateway, CfnVPC, CfnVPCGatewayAttachment } from 'aws-cdk-lib/aws-ec2';
 import { Construct } from 'constructs';
 
 interface IGWProps {

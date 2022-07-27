@@ -1,6 +1,6 @@
 import { Construct } from 'constructs';
 import { CfnLaunchTemplate, CfnSecurityGroup, CfnVPC } from 'aws-cdk-lib/aws-ec2';
-import { Fn, aws_ec2 as ec2 } from 'aws-cdk-lib';
+import { aws_ec2 as ec2, Fn } from 'aws-cdk-lib';
 import { CfnInstanceProfile, PolicyStatement, Role, ServicePrincipal } from 'aws-cdk-lib/aws-iam';
 import * as cdk from 'aws-cdk-lib';
 import { Subnet } from './Subnet';

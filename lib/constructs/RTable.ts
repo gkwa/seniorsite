@@ -1,4 +1,4 @@
-import { CfnRouteTable, CfnRoute, CfnSubnetRouteTableAssociation, CfnVPC } from 'aws-cdk-lib/aws-ec2';
+import { CfnRoute, CfnRouteTable, CfnSubnetRouteTableAssociation, CfnVPC } from 'aws-cdk-lib/aws-ec2';
 import { Construct } from 'constructs';
 import { IGW } from './Igw';
 import { Subnet } from './Subnet';
