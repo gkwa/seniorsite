@@ -18,7 +18,7 @@ export class RTable extends Construct {
         // Route Table
         const webrt = new CfnRouteTable(this, 'cdiA-rtable', {
             vpcId: vpc.ref,
-            tags: [{ key: 'Name', value: 'cdiA-rtable' }],
+            tags: [{ key: 'Name', value: 'cdiA' }],
         });
 
         new CfnSubnetRouteTableAssociation(this, 'cdiB-srta', {

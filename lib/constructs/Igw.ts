@@ -15,7 +15,7 @@ export class IGW extends Construct {
 
         // Create Internet Gateway
         this.igw = new CfnInternetGateway(this, 'igw-sbx-cdi', {
-            tags: [{ key: 'Name', value: 'igw-sbx-cdi' }],
+            tags: [{ key: 'Name', value: 'sbx-cdi' }],
         });
 
         // Attach Internet Gateway
