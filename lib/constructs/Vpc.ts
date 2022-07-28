@@ -13,7 +13,7 @@ export class VPC extends Construct {
             enableDnsHostnames: true,
             enableDnsSupport: true,
             instanceTenancy: 'default',
-            tags: [{ key: 'Name', value: 'vpc-sbx-cdi' }],
+            tags: [{ key: 'Name', value: 'sbx-cdi' }],
         });
     }
 }
