@@ -26,7 +26,7 @@ export class SecurityGroup extends Construct {
             ipProtocol: 'udp',
             cidrIp: '0.0.0.0/0',
             fromPort: 1770,
-            toPort: 1790,
+            toPort: 1780,
         });
 
         new ec2.CfnSecurityGroupIngress(this, 'ACTL3 TCP', {
@@ -35,7 +35,7 @@ export class SecurityGroup extends Construct {
             ipProtocol: 'tcp',
             cidrIp: '0.0.0.0/0',
             fromPort: 1770,
-            toPort: 1790,
+            toPort: 1780,
         });
 
         new ec2.CfnSecurityGroupIngress(this, 'HTTP', {
