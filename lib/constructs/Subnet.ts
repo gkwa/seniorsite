@@ -21,7 +21,7 @@ export class Subnet extends Construct {
             availabilityZone: cdk.Stack.of(this).availabilityZones[0],
             cidrBlock: '10.0.0.0/24',
             vpcId,
-            mapPublicIpOnLaunch: false,
+            mapPublicIpOnLaunch: true,
             tags: [{ key: 'Name', value: 'cdiA' }],
         });
 
@@ -29,7 +29,7 @@ export class Subnet extends Construct {
             availabilityZone: cdk.Stack.of(this).availabilityZones[1],
             cidrBlock: '10.0.1.0/24',
             vpcId,
-            mapPublicIpOnLaunch: false,
+            mapPublicIpOnLaunch: true,
             tags: [{ key: 'Name', value: 'cdiB' }],
         });
     }
