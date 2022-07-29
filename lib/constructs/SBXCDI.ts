@@ -51,11 +51,11 @@ mkdir -p /opt/sbx
 curl -o /opt/sbx/InstallSbxCDI.tgz https://streambox-cdi.s3-us-west-2.amazonaws.com/latest/linux/InstallSbxCDI.tgz
 tar xzf /opt/sbx/InstallSbxCDI.tgz -C /opt/sbx
 cd /opt/sbx/InstallSbxCDI
-/opt/sbx/InstallSbxCDI/installweb
 /opt/sbx/InstallSbxCDI/installefa
-/opt/sbx/InstallSbxCDI/installsbx
 /opt/sbx/InstallSbxCDI/sanity_check
 PATH=/opt/amazon/efa/bin:$PATH /opt/sbx/InstallSbxCDI/aws-efa-installer/efa_test.sh
+/opt/sbx/InstallSbxCDI/installweb
+/opt/sbx/InstallSbxCDI/installsbx
 `);
 
         // Launch Template
