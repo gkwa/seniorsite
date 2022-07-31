@@ -56,6 +56,17 @@ PATH=/opt/amazon/efa/bin:$PATH /opt/sbx/InstallSbxCDI/aws-efa-installer/efa_test
             iamInstanceProfile: {
                 arn: cdiInstanceProfile.attrArn,
             },
+            tagSpecifications: [
+                {
+                    resourceType: 'instance',
+                    tags: [
+                        {
+                            key: 'Name',
+                            value: 'sbx-cdi',
+                        },
+                    ],
+                },
+            ],
             networkInterfaces: [
                 {
                     interfaceType: 'efa',
