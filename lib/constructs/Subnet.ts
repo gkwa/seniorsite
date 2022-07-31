@@ -22,7 +22,7 @@ export class Subnet extends Construct {
             cidrBlock: '10.0.0.0/24',
             vpcId,
             mapPublicIpOnLaunch: true,
-            tags: [{ key: 'Name', value: 'cdiA' }],
+            tags: [{ key: 'Name', value: 'sbx-cdiA' }],
         });
 
         this.cdiB = new CfnSubnet(this, 'cdiB', {
@@ -30,7 +30,7 @@ export class Subnet extends Construct {
             cidrBlock: '10.0.1.0/24',
             vpcId,
             mapPublicIpOnLaunch: true,
-            tags: [{ key: 'Name', value: 'cdiB' }],
+            tags: [{ key: 'Name', value: 'sbx-cdiB' }],
         });
     }
 }
