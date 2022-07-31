@@ -69,7 +69,7 @@ PATH=/opt/amazon/efa/bin:$PATH /opt/sbx/InstallSbxCDI/aws-efa-installer/efa_test
             userData,
         };
 
-        const launchTemplate = new CfnLaunchTemplate(this, 'launch-template', {
+        new CfnLaunchTemplate(this, 'launch-template', {
             launchTemplateData,
             launchTemplateName: 'sbx-cdi',
         });
