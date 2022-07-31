@@ -21,6 +21,7 @@ export class SBXCDI extends Construct {
 
         const ami = new ec2.AmazonLinuxImage({
             generation: ec2.AmazonLinuxGeneration.AMAZON_LINUX_2,
+            kernel: ec2.AmazonLinuxKernel.KERNEL5_X
         });
 
         // Role for EC2 Instance Profile
