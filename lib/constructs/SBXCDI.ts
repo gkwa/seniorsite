@@ -84,5 +84,20 @@ PATH=/opt/amazon/efa/bin:$PATH /opt/sbx/InstallSbxCDI/aws-efa-installer/efa_test
             launchTemplateData,
             launchTemplateName: 'sbx-cdi',
         });
+
+        const instance1 = new ec2.CfnInstance(this, 'Instance1', {
+            launchTemplate: {
+                launchTemplateId: launchTemplate.ref,
+                version: launchTemplate.attrLatestVersionNumber,
+            },
+            availabilityZone: subnets.cdiA.availabilityZone,
+        });
+        cdk.Tags.of(instance1).add('Name', 'sbx-cdi');
+
+        new cdk.CfnOutput(this, 'publicIp', {
+            value: instance1.attrPublicIp,
+            description: 'Instance Public Ip',
+            exportName: 'ec2-public-ip',
+        });
     }
 }
