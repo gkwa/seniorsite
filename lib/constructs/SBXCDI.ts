@@ -19,10 +19,7 @@ export class SBXCDI extends Construct {
 
         const { subnets, cdisg } = props;
 
-        const ami = new ec2.AmazonLinuxImage({
-            generation: ec2.AmazonLinuxGeneration.AMAZON_LINUX_2,
-            kernel: ec2.AmazonLinuxKernel.KERNEL5_X,
-        });
+        const imageId = 'ami-0233508e64363ee5a'
 
         // Role for EC2 Instance Profile
         const role = new Role(this, 'cdi-role', {
@@ -51,7 +48,7 @@ PATH=/opt/amazon/efa/bin:$PATH /opt/sbx/InstallSbxCDI/aws-efa-installer/efa_test
 
         // Launch Template
         const launchTemplateData: CfnLaunchTemplate.LaunchTemplateDataProperty = {
-            imageId: ami.getImage(this).imageId,
+            imageId,
             instanceType: props.instanceType.toString(),
             iamInstanceProfile: {
                 arn: cdiInstanceProfile.attrArn,
@@ -80,7 +77,7 @@ PATH=/opt/amazon/efa/bin:$PATH /opt/sbx/InstallSbxCDI/aws-efa-installer/efa_test
             userData,
         };
 
-        new CfnLaunchTemplate(this, 'launch-template', {
+        const launchTemplate = new CfnLaunchTemplate(this, 'launch-template', {
             launchTemplateData,
             launchTemplateName: 'sbx-cdi',
         });
