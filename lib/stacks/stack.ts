@@ -13,6 +13,12 @@ export class NetworkStack extends Stack {
     constructor(scope: Construct, id: string, props?: StackProps) {
         super(scope, id, props);
 
+        const sshCIDR = new cdk.CfnParameter(this, 'SSH CIDR', {
+            type: 'String',
+            allowedPattern: '.+',
+            description: 'SSH: Please set CIDR to x.x.x.x/32 to allow one specific IP address access, 0.0.0.0/0 to allow all IP addresses access, or another CIDR range.',
+        });
+
         const keyName = new cdk.CfnParameter(this, 'KeyName', {
             type: 'AWS::EC2::KeyPair::KeyName',
             allowedPattern: '.+',
@@ -31,7 +37,7 @@ export class NetworkStack extends Stack {
 
         const subnets = new Subnet(this, 'subnets', { vpc });
 
-        const securityGroups = new SecurityGroup(this, 'SGs', { vpc });
+        const securityGroups = new SecurityGroup(this, 'SGs', { vpc, sshCIDR: sshCIDR.valueAsString });
 
         const igw = new IGW(this, 'IGW', { vpc });
 
