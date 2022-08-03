@@ -25,7 +25,7 @@ export class SBXCDI extends Construct {
         const role = new Role(this, 'cdi-role', {
             assumedBy: new ServicePrincipal('ec2.amazonaws.com'),
             description: 'Role for sbx CDI instances',
-            roleName: `sbx-cdi-role-${cdk.Stack.of(this).region}`,
+            roleName: `sbx-cdi-${cdk.Stack.of(this).region}`,
         });
 
         role.addToPolicy(
