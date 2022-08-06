@@ -15,7 +15,7 @@ export class NetworkStack extends Stack {
 
         const sshCIDR = new cdk.CfnParameter(this, 'SSH CIDR', {
             type: 'String',
-            allowedPattern: '.+',
+            allowedPattern: '(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})/(\\d{1,2})',
             description: 'SSH: Please set CIDR to x.x.x.x/32 to allow one specific IP address access, 0.0.0.0/0 to allow all IP addresses access, or another CIDR range.',
         });
 
