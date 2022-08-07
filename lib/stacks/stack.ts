@@ -13,7 +13,7 @@ export class NetworkStack extends Stack {
     constructor(scope: Construct, id: string, props?: StackProps) {
         super(scope, id, props);
 
-        const sshCIDR = new cdk.CfnParameter(this, 'SSH CIDR', {
+        const SSHLocation = new cdk.CfnParameter(this, 'SSHLocation', {
             type: 'String',
             allowedPattern: '(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})/(\\d{1,2})',
             description: 'SSH: Please set CIDR to x.x.x.x/32 to allow one specific IP address access, 0.0.0.0/0 to allow all IP addresses access, or another CIDR range.',
@@ -37,7 +37,7 @@ export class NetworkStack extends Stack {
 
         const subnets = new Subnet(this, 'subnets', { vpc });
 
-        const securityGroups = new SecurityGroup(this, 'SGs', { vpc, sshCIDR: sshCIDR.valueAsString });
+        const securityGroups = new SecurityGroup(this, 'SGs', { vpc, SSHLocation: SSHLocation.valueAsString });
 
         const igw = new IGW(this, 'IGW', { vpc });
 

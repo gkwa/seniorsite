@@ -4,7 +4,7 @@ import { aws_ec2 as ec2 } from 'aws-cdk-lib';
 
 interface SGProps {
     vpc: CfnVPC;
-    sshCIDR: string;
+    SSHLocation: string;
 }
 
 export class SecurityGroup extends Construct {
@@ -61,7 +61,7 @@ export class SecurityGroup extends Construct {
             groupId: cfnSecurityGroup.attrGroupId,
             description: 'Allow SSH access from the internet',
             ipProtocol: 'tcp',
-            cidrIp: props.sshCIDR,
+            cidrIp: props.SSHLocation,
             fromPort: 22,
             toPort: 22,
         });
