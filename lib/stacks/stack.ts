@@ -37,7 +37,10 @@ export class NetworkStack extends Stack {
 
         const subnets = new Subnet(this, 'subnets', { vpc });
 
-        const securityGroups = new SecurityGroup(this, 'SGs', { vpc, SSHLocation: SSHLocation.valueAsString });
+        const securityGroups = new SecurityGroup(this, 'SGs', {
+            vpc,
+            SSHLocation: SSHLocation.valueAsString,
+        });
 
         const igw = new IGW(this, 'IGW', { vpc });
 

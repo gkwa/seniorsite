@@ -20,7 +20,7 @@ aws s3 cp $tpl2 $s3tpl --grants read=uri=http://acs.amazonaws.com/groups/global/
 curl -sI $s3tplendpoint
 echo $s3tplendpoint
 
-open 'https://us-east-1.console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/create/template'
+# open 'https://us-east-1.console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/create/template'
 
 exit 0
 time cdk deploy --require-approval=never --no-rollback
