@@ -39,7 +39,7 @@ export class SBXCDI extends Construct {
                 'eu-west-3': { ami: 'ami-0f66d5634e8afdca8' },
                 'me-south-1': { ami: 'ami-003fb8fbf67a0dcc4' },
                 'sa-east-1': { ami: 'ami-0eb79362cb8f59789' },
-                'us-east-1': { ami: 'ami-0233508e64363ee5a' },
+                'us-east-1': { ami: 'ami-08d996ad41b263466' },
                 'us-east-2': { ami: 'ami-0d47d5e3f4f198110' },
                 'us-west-1': { ami: 'ami-0839ab0bb206d9f9b' },
                 'us-west-2': { ami: 'ami-0d01bfeb56fa54146' },
