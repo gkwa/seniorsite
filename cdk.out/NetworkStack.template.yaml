@@ -11,28 +11,20 @@ Parameters:
     Type: String
     Default: c5n.9xlarge
     Description: EC2 instance type
+  VPCID:
+    Type: AWS::EC2::VPC::Id
+    AllowedPattern: .+
+    Description: ID of pre-existing vpc.
   BootstrapVersion:
     Type: AWS::SSM::Parameter::Value<String>
     Default: /cdk-bootstrap/hnb659fds/version
     Description: Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]
 Resources:
-  vpcsbxcdivpcFEE27BEE:
-    Type: AWS::EC2::VPC
-    Properties:
-      CidrBlock: 10.0.0.0/16
-      EnableDnsHostnames: true
-      EnableDnsSupport: true
-      InstanceTenancy: default
-      Tags:
-        - Key: Name
-          Value: sbx-cdi
-    Metadata:
-      aws:cdk:path: NetworkStack/vpc-sbx-cdi/vpc
   subnetscdiAsubnetF37012F5:
     Type: AWS::EC2::Subnet
     Properties:
       VpcId:
-        Ref: vpcsbxcdivpcFEE27BEE
+        Ref: VPCID
       AvailabilityZone:
         Fn::Select:
           - 0
@@ -48,7 +40,7 @@ Resources:
     Type: AWS::EC2::Subnet
     Properties:
       VpcId:
-        Ref: vpcsbxcdivpcFEE27BEE
+        Ref: VPCID
       AvailabilityZone:
         Fn::Select:
           - 1
@@ -69,7 +61,7 @@ Resources:
         - Key: Name
           Value: sbx-cdi
       VpcId:
-        Ref: vpcsbxcdivpcFEE27BEE
+        Ref: VPCID
     Metadata:
       aws:cdk:path: NetworkStack/SGs/MyCfnSecurityGroup
   SGsACTL3UDPB94FEE9A:
@@ -197,7 +189,7 @@ Resources:
     Type: AWS::EC2::VPCGatewayAttachment
     Properties:
       VpcId:
-        Ref: vpcsbxcdivpcFEE27BEE
+        Ref: VPCID
       InternetGatewayId:
         Ref: IGWigwsbxcdi7C0EA41C
     Metadata:
@@ -206,7 +198,7 @@ Resources:
     Type: AWS::EC2::RouteTable
     Properties:
       VpcId:
-        Ref: vpcsbxcdivpcFEE27BEE
+        Ref: VPCID
       Tags:
         - Key: Name
           Value: sbx-cdiA
