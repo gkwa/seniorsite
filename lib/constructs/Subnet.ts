@@ -17,7 +17,7 @@ export class Subnet extends Construct {
         const vpcId = props.vpc.ref;
 
         // CDI subnets
-        this.cdiA = new CfnSubnet(this, 'cdiA', {
+        this.cdiA = new CfnSubnet(this, 'cdiA-subnet', {
             availabilityZone: cdk.Stack.of(this).availabilityZones[0],
             cidrBlock: '10.0.0.0/24',
             vpcId,
@@ -25,7 +25,7 @@ export class Subnet extends Construct {
             tags: [{ key: 'Name', value: 'sbx-cdiA' }],
         });
 
-        this.cdiB = new CfnSubnet(this, 'cdiB', {
+        this.cdiB = new CfnSubnet(this, 'cdiB-subnet', {
             availabilityZone: cdk.Stack.of(this).availabilityZones[1],
             cidrBlock: '10.0.1.0/24',
             vpcId,
