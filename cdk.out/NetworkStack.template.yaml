@@ -30,8 +30,6 @@ Resources:
       Tags:
         - Key: Name
           Value: sbx-cdiA
-    Metadata:
-      aws:cdk:path: NetworkStack/subnets/cdiA-subnet
   subnetscdiBsubnet1A3B9F51:
     Type: AWS::EC2::Subnet
     Properties:
@@ -46,8 +44,6 @@ Resources:
       Tags:
         - Key: Name
           Value: sbx-cdiB
-    Metadata:
-      aws:cdk:path: NetworkStack/subnets/cdiB-subnet
   SGsMyCfnSecurityGroupA0E5FF69:
     Type: AWS::EC2::SecurityGroup
     Properties:
@@ -58,8 +54,6 @@ Resources:
           Value: sbx-cdi
       VpcId:
         Ref: VPCID
-    Metadata:
-      aws:cdk:path: NetworkStack/SGs/MyCfnSecurityGroup
   SGsACTL3UDPB94FEE9A:
     Type: AWS::EC2::SecurityGroupIngress
     Properties:
@@ -72,8 +66,6 @@ Resources:
           - SGsMyCfnSecurityGroupA0E5FF69
           - GroupId
       ToPort: 1780
-    Metadata:
-      aws:cdk:path: NetworkStack/SGs/ACTL3 UDP
   SGsACTL3TCPDE340485:
     Type: AWS::EC2::SecurityGroupIngress
     Properties:
@@ -86,8 +78,6 @@ Resources:
           - SGsMyCfnSecurityGroupA0E5FF69
           - GroupId
       ToPort: 1780
-    Metadata:
-      aws:cdk:path: NetworkStack/SGs/ACTL3 TCP
   SGsHTTP81848A1A:
     Type: AWS::EC2::SecurityGroupIngress
     Properties:
@@ -100,8 +90,6 @@ Resources:
           - SGsMyCfnSecurityGroupA0E5FF69
           - GroupId
       ToPort: 80
-    Metadata:
-      aws:cdk:path: NetworkStack/SGs/HTTP
   SGsHTTPS92ABDDE2:
     Type: AWS::EC2::SecurityGroupIngress
     Properties:
@@ -114,8 +102,6 @@ Resources:
           - SGsMyCfnSecurityGroupA0E5FF69
           - GroupId
       ToPort: 443
-    Metadata:
-      aws:cdk:path: NetworkStack/SGs/HTTPS
   SGsSSH44508AD9:
     Type: AWS::EC2::SecurityGroupIngress
     Properties:
@@ -129,8 +115,6 @@ Resources:
           - SGsMyCfnSecurityGroupA0E5FF69
           - GroupId
       ToPort: 22
-    Metadata:
-      aws:cdk:path: NetworkStack/SGs/SSH
   SGsEnableEFAIngressA11F7208:
     Type: AWS::EC2::SecurityGroupIngress
     Properties:
@@ -159,8 +143,6 @@ Resources:
         Fn::GetAtt:
           - SGsMyCfnSecurityGroupA0E5FF69
           - GroupId
-    Metadata:
-      aws:cdk:path: NetworkStack/SGs/Enable EFA egress
   SGsEnablealloutboundegress37F6CF43:
     Type: AWS::EC2::SecurityGroupEgress
     Properties:
@@ -171,16 +153,12 @@ Resources:
       IpProtocol: "-1"
       CidrIp: 0.0.0.0/0
       Description: Allow all traffic out
-    Metadata:
-      aws:cdk:path: NetworkStack/SGs/Enable all outbound egress
   IGWigwsbxcdi7C0EA41C:
     Type: AWS::EC2::InternetGateway
     Properties:
       Tags:
         - Key: Name
           Value: sbx-cdi
-    Metadata:
-      aws:cdk:path: NetworkStack/IGW/igw-sbx-cdi
   IGWvpcgwsbxcdiDF298982:
     Type: AWS::EC2::VPCGatewayAttachment
     Properties:
@@ -188,8 +166,6 @@ Resources:
         Ref: VPCID
       InternetGatewayId:
         Ref: IGWigwsbxcdi7C0EA41C
-    Metadata:
-      aws:cdk:path: NetworkStack/IGW/vpcgw-sbx-cdi
   rtablescdiArtableA59AF960:
     Type: AWS::EC2::RouteTable
     Properties:
@@ -198,8 +174,6 @@ Resources:
       Tags:
         - Key: Name
           Value: sbx-cdiA
-    Metadata:
-      aws:cdk:path: NetworkStack/rtables/cdiA-rtable
   rtablescdiBsrta63414513:
     Type: AWS::EC2::SubnetRouteTableAssociation
     Properties:
@@ -211,8 +185,6 @@ Resources:
         Fn::GetAtt:
           - subnetscdiBsubnet1A3B9F51
           - SubnetId
-    Metadata:
-      aws:cdk:path: NetworkStack/rtables/cdiB-srta
   rtablescdiArouteEE2A88FE:
     Type: AWS::EC2::Route
     Properties:
@@ -223,8 +195,6 @@ Resources:
       DestinationCidrBlock: 0.0.0.0/0
       GatewayId:
         Ref: IGWigwsbxcdi7C0EA41C
-    Metadata:
-      aws:cdk:path: NetworkStack/rtables/cdiA-route
   rtablescdiAsrtaA81E8116:
     Type: AWS::EC2::SubnetRouteTableAssociation
     Properties:
@@ -236,8 +206,6 @@ Resources:
         Fn::GetAtt:
           - subnetscdiAsubnetF37012F5
           - SubnetId
-    Metadata:
-      aws:cdk:path: NetworkStack/rtables/cdiA-srta
   CDIcdirole92665D66:
     Type: AWS::IAM::Role
     Properties:
@@ -258,8 +226,6 @@ Resources:
           - ""
           - - sbx-cdi-
             - Ref: AWS::Region
-    Metadata:
-      aws:cdk:path: NetworkStack/CDI/cdi-role/Resource
   CDIcdiroleDefaultPolicyE3F2C3C7:
     Type: AWS::IAM::Policy
     Properties:
@@ -272,8 +238,6 @@ Resources:
       PolicyName: CDIcdiroleDefaultPolicyE3F2C3C7
       Roles:
         - Ref: CDIcdirole92665D66
-    Metadata:
-      aws:cdk:path: NetworkStack/CDI/cdi-role/DefaultPolicy/Resource
   CDIcdiInstanceProfile73CBEB23:
     Type: AWS::IAM::InstanceProfile
     Properties:
@@ -284,8 +248,6 @@ Resources:
           - ""
           - - cdiInstanceProfile-
             - Ref: AWS::Region
-    Metadata:
-      aws:cdk:path: NetworkStack/CDI/cdiInstanceProfile
   CDIlaunchtemplate8761A726:
     Type: AWS::EC2::LaunchTemplate
     Properties:
@@ -327,8 +289,6 @@ Resources:
             /opt/sbx/InstallSbxCDI/sanity_check
             PATH=/opt/amazon/efa/bin:$PATH /opt/sbx/InstallSbxCDI/aws-efa-installer/efa_test.sh
       LaunchTemplateName: sbx-cdi
-    Metadata:
-      aws:cdk:path: NetworkStack/CDI/launch-template
   CDIInstance18DD8688F:
     Type: AWS::EC2::Instance
     Properties:
@@ -346,8 +306,6 @@ Resources:
       Tags:
         - Key: Name
           Value: sbx-cdi
-    Metadata:
-      aws:cdk:path: NetworkStack/CDI/Instance1
   CDKMetadata:
     Type: AWS::CDK::Metadata
     Properties:
