@@ -15,10 +15,6 @@ Parameters:
     Type: AWS::EC2::VPC::Id
     AllowedPattern: .+
     Description: ID of pre-existing vpc.
-  BootstrapVersion:
-    Type: AWS::SSM::Parameter::Value<String>
-    Default: /cdk-bootstrap/hnb659fds/version
-    Description: Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]
 Resources:
   subnetscdiAsubnetF37012F5:
     Type: AWS::EC2::Subnet
@@ -486,16 +482,3 @@ Conditions:
           - Fn::Equals:
               - Ref: AWS::Region
               - us-west-2
-Rules:
-  CheckBootstrapVersion:
-    Assertions:
-      - Assert:
-          Fn::Not:
-            - Fn::Contains:
-                - - "1"
-                  - "2"
-                  - "3"
-                  - "4"
-                  - "5"
-                - Ref: BootstrapVersion
-        AssertDescription: CDK bootstrap stack version 6 required. Please run 'cdk bootstrap' with a recent version of the CDK CLI.
