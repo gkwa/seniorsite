@@ -24,20 +24,6 @@ Parameters:
     AllowedPattern: .+
     Description: ID of pre-existing subnet.
 Resources:
-  subnetscdiBsubnet1A3B9F51:
-    Type: AWS::EC2::Subnet
-    Properties:
-      VpcId:
-        Ref: VPCID
-      AvailabilityZone:
-        Fn::Select:
-          - 1
-          - Fn::GetAZs: ""
-      CidrBlock: 10.0.1.0/24
-      MapPublicIpOnLaunch: true
-      Tags:
-        - Key: Name
-          Value: sbx-cdiB
   SGsMyCfnSecurityGroupA0E5FF69:
     Type: AWS::EC2::SecurityGroup
     Properties:
@@ -168,17 +154,6 @@ Resources:
       Tags:
         - Key: Name
           Value: sbx-cdiA
-  rtablescdiBsrta63414513:
-    Type: AWS::EC2::SubnetRouteTableAssociation
-    Properties:
-      RouteTableId:
-        Fn::GetAtt:
-          - rtablescdiArtableA59AF960
-          - RouteTableId
-      SubnetId:
-        Fn::GetAtt:
-          - subnetscdiBsubnet1A3B9F51
-          - SubnetId
   rtablescdiArouteEE2A88FE:
     Type: AWS::EC2::Route
     Properties:
