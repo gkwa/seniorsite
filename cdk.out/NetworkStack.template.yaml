@@ -15,21 +15,11 @@ Parameters:
     Type: AWS::EC2::VPC::Id
     AllowedPattern: .+
     Description: ID of pre-existing vpc.
+  SubetIDCDIA:
+    Type: AWS::EC2::Subnet::Id
+    AllowedPattern: .+
+    Description: ID of pre-existing subnet.
 Resources:
-  subnetscdiAsubnetF37012F5:
-    Type: AWS::EC2::Subnet
-    Properties:
-      VpcId:
-        Ref: VPCID
-      AvailabilityZone:
-        Fn::Select:
-          - 0
-          - Fn::GetAZs: ""
-      CidrBlock: 10.0.0.0/24
-      MapPublicIpOnLaunch: true
-      Tags:
-        - Key: Name
-          Value: sbx-cdiA
   subnetscdiBsubnet1A3B9F51:
     Type: AWS::EC2::Subnet
     Properties:
@@ -203,9 +193,7 @@ Resources:
           - rtablescdiArtableA59AF960
           - RouteTableId
       SubnetId:
-        Fn::GetAtt:
-          - subnetscdiAsubnetF37012F5
-          - SubnetId
+        Ref: SubetIDCDIA
   CDIcdirole92665D66:
     Type: AWS::IAM::Role
     Properties:
@@ -275,9 +263,7 @@ Resources:
                   - GroupId
             InterfaceType: efa
             SubnetId:
-              Fn::GetAtt:
-                - subnetscdiAsubnetF37012F5
-                - SubnetId
+              Ref: SubetIDCDIA
         TagSpecifications:
           - ResourceType: instance
             Tags:
