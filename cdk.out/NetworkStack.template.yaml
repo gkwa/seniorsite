@@ -133,19 +133,6 @@ Resources:
       IpProtocol: "-1"
       CidrIp: 0.0.0.0/0
       Description: Allow all traffic out
-  IGWigwsbxcdi7C0EA41C:
-    Type: AWS::EC2::InternetGateway
-    Properties:
-      Tags:
-        - Key: Name
-          Value: sbx-cdi
-  IGWvpcgwsbxcdiDF298982:
-    Type: AWS::EC2::VPCGatewayAttachment
-    Properties:
-      VpcId:
-        Ref: VPCID
-      InternetGatewayId:
-        Ref: IGWigwsbxcdi7C0EA41C
   rtablescdiArtableA59AF960:
     Type: AWS::EC2::RouteTable
     Properties:
@@ -154,16 +141,6 @@ Resources:
       Tags:
         - Key: Name
           Value: sbx-cdiA
-  rtablescdiArouteEE2A88FE:
-    Type: AWS::EC2::Route
-    Properties:
-      RouteTableId:
-        Fn::GetAtt:
-          - rtablescdiArtableA59AF960
-          - RouteTableId
-      DestinationCidrBlock: 0.0.0.0/0
-      GatewayId:
-        Ref: IGWigwsbxcdi7C0EA41C
   rtablescdiAsrtaA81E8116:
     Type: AWS::EC2::SubnetRouteTableAssociation
     Properties:
