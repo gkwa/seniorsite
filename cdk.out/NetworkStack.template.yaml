@@ -23,10 +23,6 @@ Parameters:
     Type: AWS::EC2::Subnet::Id
     AllowedPattern: .+
     Description: ID of pre-existing subnet.
-  RouteTableCDIAID:
-    Type: AWS::EC2::RouteTable
-    AllowedPattern: .+
-    Description: ID of pre-existing route table that has gateway attached.
 Resources:
   SGsMyCfnSecurityGroupA0E5FF69:
     Type: AWS::EC2::SecurityGroup
@@ -137,11 +133,21 @@ Resources:
       IpProtocol: "-1"
       CidrIp: 0.0.0.0/0
       Description: Allow all traffic out
+  rtablescdiArtableA59AF960:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId:
+        Ref: VPCID
+      Tags:
+        - Key: Name
+          Value: sbx-cdiA
   rtablescdiAsrtaA81E8116:
     Type: AWS::EC2::SubnetRouteTableAssociation
     Properties:
       RouteTableId:
-        Ref: RouteTableCDIAID
+        Fn::GetAtt:
+          - rtablescdiArtableA59AF960
+          - RouteTableId
       SubnetId:
         Ref: SubetIDCDIA
   CDIcdirole92665D66:
