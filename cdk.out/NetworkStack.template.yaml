@@ -1,4 +1,4 @@
-AWSTemplateFormatVersion: 2010-09-09
+AWSTemplateFormatVersion: "2010-09-09"
 Description: Streambox CDI
 Metadata:
   AWS::CloudFormation::Interface:
@@ -57,8 +57,8 @@ Resources:
       GroupDescription: sbx-cdi
       GroupName: sbx-cdi
       Tags:
-        - Key: Name
-          Value: sbx-cdi
+      - Key: Name
+        Value: sbx-cdi
       VpcId:
         Ref: VPCID
   SGsACTL3UDPB94FEE9A:
@@ -70,8 +70,8 @@ Resources:
       FromPort: 1770
       GroupId:
         Fn::GetAtt:
-          - SGsMyCfnSecurityGroupA0E5FF69
-          - GroupId
+        - SGsMyCfnSecurityGroupA0E5FF69
+        - GroupId
       ToPort: 1780
   SGsACTL3TCPDE340485:
     Type: AWS::EC2::SecurityGroupIngress
@@ -82,8 +82,8 @@ Resources:
       FromPort: 1770
       GroupId:
         Fn::GetAtt:
-          - SGsMyCfnSecurityGroupA0E5FF69
-          - GroupId
+        - SGsMyCfnSecurityGroupA0E5FF69
+        - GroupId
       ToPort: 1780
   SGsHTTP81848A1A:
     Type: AWS::EC2::SecurityGroupIngress
@@ -94,8 +94,8 @@ Resources:
       FromPort: 80
       GroupId:
         Fn::GetAtt:
-          - SGsMyCfnSecurityGroupA0E5FF69
-          - GroupId
+        - SGsMyCfnSecurityGroupA0E5FF69
+        - GroupId
       ToPort: 80
   SGsHTTPS92ABDDE2:
     Type: AWS::EC2::SecurityGroupIngress
@@ -106,8 +106,8 @@ Resources:
       FromPort: 443
       GroupId:
         Fn::GetAtt:
-          - SGsMyCfnSecurityGroupA0E5FF69
-          - GroupId
+        - SGsMyCfnSecurityGroupA0E5FF69
+        - GroupId
       ToPort: 443
   SGsSSH44508AD9:
     Type: AWS::EC2::SecurityGroupIngress
@@ -119,8 +119,8 @@ Resources:
       FromPort: 22
       GroupId:
         Fn::GetAtt:
-          - SGsMyCfnSecurityGroupA0E5FF69
-          - GroupId
+        - SGsMyCfnSecurityGroupA0E5FF69
+        - GroupId
       ToPort: 22
   SGsEnableEFAIngressA11F7208:
     Type: AWS::EC2::SecurityGroupIngress
@@ -129,32 +129,32 @@ Resources:
       Description: Allow all traffic from myself
       GroupId:
         Fn::GetAtt:
-          - SGsMyCfnSecurityGroupA0E5FF69
-          - GroupId
+        - SGsMyCfnSecurityGroupA0E5FF69
+        - GroupId
       SourceSecurityGroupId:
         Fn::GetAtt:
-          - SGsMyCfnSecurityGroupA0E5FF69
-          - GroupId
+        - SGsMyCfnSecurityGroupA0E5FF69
+        - GroupId
   SGsEnableEFAegressD7BE2DBA:
     Type: AWS::EC2::SecurityGroupEgress
     Properties:
       GroupId:
         Fn::GetAtt:
-          - SGsMyCfnSecurityGroupA0E5FF69
-          - GroupId
+        - SGsMyCfnSecurityGroupA0E5FF69
+        - GroupId
       IpProtocol: "-1"
       Description: Allow all traffic from myself
       DestinationSecurityGroupId:
         Fn::GetAtt:
-          - SGsMyCfnSecurityGroupA0E5FF69
-          - GroupId
+        - SGsMyCfnSecurityGroupA0E5FF69
+        - GroupId
   SGsEnablealloutboundegress37F6CF43:
     Type: AWS::EC2::SecurityGroupEgress
     Properties:
       GroupId:
         Fn::GetAtt:
-          - SGsMyCfnSecurityGroupA0E5FF69
-          - GroupId
+        - SGsMyCfnSecurityGroupA0E5FF69
+        - GroupId
       IpProtocol: "-1"
       CidrIp: 0.0.0.0/0
       Description: Allow all traffic out
@@ -163,43 +163,43 @@ Resources:
     Properties:
       AssumeRolePolicyDocument:
         Statement:
-          - Action: sts:AssumeRole
-            Effect: Allow
-            Principal:
-              Service:
-                Fn::Join:
-                  - ""
-                  - - ec2.
-                    - Ref: AWS::URLSuffix
+        - Action: sts:AssumeRole
+          Effect: Allow
+          Principal:
+            Service:
+              Fn::Join:
+              - ""
+              - - ec2.
+                - Ref: AWS::URLSuffix
         Version: "2012-10-17"
       Description: Role for sbx CDI instances
       RoleName:
         Fn::Join:
-          - ""
-          - - sbx-cdi-
-            - Ref: AWS::Region
+        - ""
+        - - sbx-cdi-
+          - Ref: AWS::Region
   CDIcdiroleDefaultPolicyE3F2C3C7:
     Type: AWS::IAM::Policy
     Properties:
       PolicyDocument:
         Statement:
-          - Action: mediaconnect:*
-            Effect: Allow
-            Resource: '*'
+        - Action: mediaconnect:*
+          Effect: Allow
+          Resource: '*'
         Version: "2012-10-17"
       PolicyName: CDIcdiroleDefaultPolicyE3F2C3C7
       Roles:
-        - Ref: CDIcdirole92665D66
+      - Ref: CDIcdirole92665D66
   CDIcdiInstanceProfile73CBEB23:
     Type: AWS::IAM::InstanceProfile
     Properties:
       Roles:
-        - Ref: CDIcdirole92665D66
+      - Ref: CDIcdirole92665D66
       InstanceProfileName:
         Fn::Join:
-          - ""
-          - - cdiInstanceProfile-
-            - Ref: AWS::Region
+        - ""
+        - - cdiInstanceProfile-
+          - Ref: AWS::Region
   CDIlaunchtemplate8761A726:
     Type: AWS::EC2::LaunchTemplate
     Properties:
@@ -207,32 +207,32 @@ Resources:
         IamInstanceProfile:
           Arn:
             Fn::GetAtt:
-              - CDIcdiInstanceProfile73CBEB23
-              - Arn
+            - CDIcdiInstanceProfile73CBEB23
+            - Arn
         ImageId:
           Fn::FindInMap:
-            - CDIRegionMapEF10A6AE
-            - Ref: AWS::Region
-            - ami
+          - CDIRegionMapEF10A6AE
+          - Ref: AWS::Region
+          - ami
         InstanceType:
           Ref: InstanceType
         KeyName:
           Ref: KeyName
         NetworkInterfaces:
-          - AssociatePublicIpAddress: true
-            DeviceIndex: 0
-            Groups:
-              - Fn::GetAtt:
-                  - SGsMyCfnSecurityGroupA0E5FF69
-                  - GroupId
-            InterfaceType: efa
-            SubnetId:
-              Ref: SubetIDCDIA
+        - AssociatePublicIpAddress: true
+          DeviceIndex: 0
+          Groups:
+          - Fn::GetAtt:
+            - SGsMyCfnSecurityGroupA0E5FF69
+            - GroupId
+          InterfaceType: efa
+          SubnetId:
+            Ref: SubetIDCDIA
         TagSpecifications:
-          - ResourceType: instance
-            Tags:
-              - Key: Name
-                Value: sbx-cdi
+        - ResourceType: instance
+          Tags:
+          - Key: Name
+            Value: sbx-cdi
         UserData:
           Fn::Base64: |
             #!/usr/bin/env bash
@@ -244,18 +244,18 @@ Resources:
     Properties:
       AvailabilityZone:
         Fn::Select:
-          - 0
-          - Fn::GetAZs: ""
+        - 0
+        - Fn::GetAZs: ""
       LaunchTemplate:
         LaunchTemplateId:
           Ref: CDIlaunchtemplate8761A726
         Version:
           Fn::GetAtt:
-            - CDIlaunchtemplate8761A726
-            - LatestVersionNumber
+          - CDIlaunchtemplate8761A726
+          - LatestVersionNumber
       Tags:
-        - Key: Name
-          Value: sbx-cdi
+      - Key: Name
+        Value: sbx-cdi
 Mappings:
   CDIRegionMapEF10A6AE:
     af-south-1:
@@ -307,8 +307,8 @@ Outputs:
     Description: Instance Public Ip
     Value:
       Fn::GetAtt:
-        - CDIInstance18DD8688F
-        - PublicIp
+      - CDIInstance18DD8688F
+      - PublicIp
     Export:
       Name: ec2-public-ip
 Conditions: {}
