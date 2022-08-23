@@ -4,6 +4,7 @@ cdk synth
 yq e -P cdk.out/NetworkStack.template.json >cdk.out/NetworkStack.template.yaml
 
 yq --inplace '
+    del(.. | select(tag == "!!map" and length == 0)) |
     del(.Rules) |
     del(.Conditions.CDKMetadataAvailable) |
     del(.. | select(has("CDKMetadata")).CDKMetadata) |
