@@ -1,8 +1,5 @@
 #!/bin/bash
 
-cdk synth
-yq e -P cdk.out/NetworkStack.template.json >cdk.out/NetworkStack.template.yaml
-
 yq --inplace '
     del(.. | select(tag == "!!map" and length == 0)) |
     del(.Rules) |
@@ -11,5 +8,3 @@ yq --inplace '
     del(.. | select(has("Metadata")).Metadata) |
     del(.. | select(has("BootstrapVersion")).BootstrapVersion)
 ' cdk.out/NetworkStack.template.yaml
-
-git diff --color $path
