@@ -16,8 +16,8 @@ export class NetworkStack extends Stack {
         const SSHLocation = new cdk.CfnParameter(this, 'SSHLocation', {
             type: 'String',
             allowedPattern: '^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5]).){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])(/([0-9]|[1-2][0-9]|3[0-2]))$',
-            description: 'SSH: Please set CIDR to x.x.x.x/32 to allow one specific IP address access, 0.0.0.0/0 to allow all IP addresses access, or another CIDR range.',
-            constraintDescription: 'must be a valid IP CIDR range of the form x.x.x.x/x',
+            description: 'Please set CIDR to x.x.x.x/32 to allow one specific IP address access, 0.0.0.0/0 to allow all IP addresses access, or another CIDR range.',
+            constraintDescription: 'must be a valid IP CIDR range of the form x.x.x.x/x.',
             minLength: 9,
             maxLength: 18,
         });
@@ -25,14 +25,15 @@ export class NetworkStack extends Stack {
         const keyName = new cdk.CfnParameter(this, 'KeyName', {
             type: 'AWS::EC2::KeyPair::KeyName',
             allowedPattern: '.+',
-            description: 'Name of an existing EC2 key pair to enable SSH access to the instance',
-            constraintDescription: 'must be the name of an existing EC2 KeyPair',
+            description: 'Name of an existing EC2 key pair to enable SSH access to the instance.',
+            constraintDescription: 'must be the name of an existing EC2 KeyPair.',
         });
 
         const instanceTypeParam = new cdk.CfnParameter(this, 'InstanceType', {
             type: 'String',
             description: 'EC2 instance type',
             default: 'c5n.9xlarge',
+            constraintDescription: 'EC2 instance type that supports Elastic Fiber Adapter (EFA).'
         });
 
         const instanceType = new ec2.InstanceType(instanceTypeParam.valueAsString);
