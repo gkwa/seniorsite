@@ -1,3 +1,30 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: Streambox CDI
+Metadata:
+  AWS::CloudFormation::Interface:
+    ParameterGroups:
+    - Label:
+        default: EC2 Configuration
+      Parameters:
+      - InstanceType
+      - KeyName
+    - Label:
+        default: Network Configuration
+      Parameters:
+      - SSHLocation
+      - VPCID
+      - SubetIDCDIA
+    ParameterLabels:
+      InstanceType:
+        default: Instance Type
+      KeyName:
+        default: Key Pair Name
+      SSHLocation:
+        default: SSH IP Address Range
+      VPCID:
+        default: ID of pre-existing VPC in which to create EC2 instance
+      SubetIDCDIA:
+        default: ID of pre-existing subnet in which to create EC2 instance
 Parameters:
   SSHLocation:
     Type: String
@@ -16,67 +43,23 @@ Parameters:
     Default: c5n.9xlarge
     ConstraintDescription: EC2 instance type that supports Elastic Fiber Adapter (EFA).
     Description: EC2 instance type
-  BootstrapVersion:
-    Type: AWS::SSM::Parameter::Value<String>
-    Default: /cdk-bootstrap/hnb659fds/version
-    Description: Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]
+  VPCID:
+    Type: AWS::EC2::VPC::Id
+    AllowedPattern: .+
+  SubetIDCDIA:
+    Type: AWS::EC2::Subnet::Id
+    AllowedPattern: .+
 Resources:
-  vpcsbxcdivpcFEE27BEE:
-    Type: AWS::EC2::VPC
-    Properties:
-      CidrBlock: 10.0.0.0/16
-      EnableDnsHostnames: true
-      EnableDnsSupport: true
-      InstanceTenancy: default
-      Tags:
-        - Key: Name
-          Value: sbx-cdi
-    Metadata:
-      aws:cdk:path: NetworkStack/vpc-sbx-cdi/vpc
-  subnetscdiAsubnetF37012F5:
-    Type: AWS::EC2::Subnet
-    Properties:
-      VpcId:
-        Ref: vpcsbxcdivpcFEE27BEE
-      AvailabilityZone:
-        Fn::Select:
-          - 0
-          - Fn::GetAZs: ""
-      CidrBlock: 10.0.0.0/24
-      MapPublicIpOnLaunch: true
-      Tags:
-        - Key: Name
-          Value: sbx-cdiA
-    Metadata:
-      aws:cdk:path: NetworkStack/subnets/cdiA-subnet
-  subnetscdiBsubnet1A3B9F51:
-    Type: AWS::EC2::Subnet
-    Properties:
-      VpcId:
-        Ref: vpcsbxcdivpcFEE27BEE
-      AvailabilityZone:
-        Fn::Select:
-          - 1
-          - Fn::GetAZs: ""
-      CidrBlock: 10.0.1.0/24
-      MapPublicIpOnLaunch: true
-      Tags:
-        - Key: Name
-          Value: sbx-cdiB
-    Metadata:
-      aws:cdk:path: NetworkStack/subnets/cdiB-subnet
   SGsMyCfnSecurityGroupA0E5FF69:
     Type: AWS::EC2::SecurityGroup
     Properties:
       GroupDescription: sbx-cdi
       GroupName: sbx-cdi
       Tags:
-        - Key: Name
-          Value: sbx-cdi
+      - Key: Name
+        Value: sbx-cdi
       VpcId:
-        Ref: vpcsbxcdivpcFEE27BEE
-    Metadata:
-      aws:cdk:path: NetworkStack/SGs/MyCfnSecurityGroup
+        Ref: VPCID
   SGsACTL3UDPB94FEE9A:
     Type: AWS::EC2::SecurityGroupIngress
     Properties:
@@ -86,11 +69,9 @@ Resources:
       FromPort: 1770
       GroupId:
         Fn::GetAtt:
-          - SGsMyCfnSecurityGroupA0E5FF69
-          - GroupId
+        - SGsMyCfnSecurityGroupA0E5FF69
+        - GroupId
       ToPort: 1780
-    Metadata:
-      aws:cdk:path: NetworkStack/SGs/ACTL3 UDP
   SGsACTL3TCPDE340485:
     Type: AWS::EC2::SecurityGroupIngress
     Properties:
@@ -100,11 +81,9 @@ Resources:
       FromPort: 1770
       GroupId:
         Fn::GetAtt:
-          - SGsMyCfnSecurityGroupA0E5FF69
-          - GroupId
+        - SGsMyCfnSecurityGroupA0E5FF69
+        - GroupId
       ToPort: 1780
-    Metadata:
-      aws:cdk:path: NetworkStack/SGs/ACTL3 TCP
   SGsHTTP81848A1A:
     Type: AWS::EC2::SecurityGroupIngress
     Properties:
@@ -114,11 +93,9 @@ Resources:
       FromPort: 80
       GroupId:
         Fn::GetAtt:
-          - SGsMyCfnSecurityGroupA0E5FF69
-          - GroupId
+        - SGsMyCfnSecurityGroupA0E5FF69
+        - GroupId
       ToPort: 80
-    Metadata:
-      aws:cdk:path: NetworkStack/SGs/HTTP
   SGsHTTPS92ABDDE2:
     Type: AWS::EC2::SecurityGroupIngress
     Properties:
@@ -128,11 +105,9 @@ Resources:
       FromPort: 443
       GroupId:
         Fn::GetAtt:
-          - SGsMyCfnSecurityGroupA0E5FF69
-          - GroupId
+        - SGsMyCfnSecurityGroupA0E5FF69
+        - GroupId
       ToPort: 443
-    Metadata:
-      aws:cdk:path: NetworkStack/SGs/HTTPS
   SGsSSH44508AD9:
     Type: AWS::EC2::SecurityGroupIngress
     Properties:
@@ -143,11 +118,9 @@ Resources:
       FromPort: 22
       GroupId:
         Fn::GetAtt:
-          - SGsMyCfnSecurityGroupA0E5FF69
-          - GroupId
+        - SGsMyCfnSecurityGroupA0E5FF69
+        - GroupId
       ToPort: 22
-    Metadata:
-      aws:cdk:path: NetworkStack/SGs/SSH
   SGsEnableEFAIngressA11F7208:
     Type: AWS::EC2::SecurityGroupIngress
     Properties:
@@ -155,154 +128,77 @@ Resources:
       Description: Allow all traffic from myself
       GroupId:
         Fn::GetAtt:
-          - SGsMyCfnSecurityGroupA0E5FF69
-          - GroupId
+        - SGsMyCfnSecurityGroupA0E5FF69
+        - GroupId
       SourceSecurityGroupId:
         Fn::GetAtt:
-          - SGsMyCfnSecurityGroupA0E5FF69
-          - GroupId
-    Metadata:
-      aws:cdk:path: NetworkStack/SGs/Enable EFA Ingress
+        - SGsMyCfnSecurityGroupA0E5FF69
+        - GroupId
   SGsEnableEFAegressD7BE2DBA:
     Type: AWS::EC2::SecurityGroupEgress
     Properties:
       GroupId:
         Fn::GetAtt:
-          - SGsMyCfnSecurityGroupA0E5FF69
-          - GroupId
+        - SGsMyCfnSecurityGroupA0E5FF69
+        - GroupId
       IpProtocol: "-1"
       Description: Allow all traffic from myself
       DestinationSecurityGroupId:
         Fn::GetAtt:
-          - SGsMyCfnSecurityGroupA0E5FF69
-          - GroupId
-    Metadata:
-      aws:cdk:path: NetworkStack/SGs/Enable EFA egress
+        - SGsMyCfnSecurityGroupA0E5FF69
+        - GroupId
   SGsEnablealloutboundegress37F6CF43:
     Type: AWS::EC2::SecurityGroupEgress
     Properties:
       GroupId:
         Fn::GetAtt:
-          - SGsMyCfnSecurityGroupA0E5FF69
-          - GroupId
+        - SGsMyCfnSecurityGroupA0E5FF69
+        - GroupId
       IpProtocol: "-1"
       CidrIp: 0.0.0.0/0
       Description: Allow all traffic out
-    Metadata:
-      aws:cdk:path: NetworkStack/SGs/Enable all outbound egress
-  IGWigwsbxcdi7C0EA41C:
-    Type: AWS::EC2::InternetGateway
-    Properties:
-      Tags:
-        - Key: Name
-          Value: sbx-cdi
-    Metadata:
-      aws:cdk:path: NetworkStack/IGW/igw-sbx-cdi
-  IGWvpcgwsbxcdiDF298982:
-    Type: AWS::EC2::VPCGatewayAttachment
-    Properties:
-      VpcId:
-        Ref: vpcsbxcdivpcFEE27BEE
-      InternetGatewayId:
-        Ref: IGWigwsbxcdi7C0EA41C
-    Metadata:
-      aws:cdk:path: NetworkStack/IGW/vpcgw-sbx-cdi
-  rtablescdiArtableA59AF960:
-    Type: AWS::EC2::RouteTable
-    Properties:
-      VpcId:
-        Ref: vpcsbxcdivpcFEE27BEE
-      Tags:
-        - Key: Name
-          Value: sbx-cdiA
-    Metadata:
-      aws:cdk:path: NetworkStack/rtables/cdiA-rtable
-  rtablescdiBsrta63414513:
-    Type: AWS::EC2::SubnetRouteTableAssociation
-    Properties:
-      RouteTableId:
-        Fn::GetAtt:
-          - rtablescdiArtableA59AF960
-          - RouteTableId
-      SubnetId:
-        Fn::GetAtt:
-          - subnetscdiBsubnet1A3B9F51
-          - SubnetId
-    Metadata:
-      aws:cdk:path: NetworkStack/rtables/cdiB-srta
-  rtablescdiArouteEE2A88FE:
-    Type: AWS::EC2::Route
-    Properties:
-      RouteTableId:
-        Fn::GetAtt:
-          - rtablescdiArtableA59AF960
-          - RouteTableId
-      DestinationCidrBlock: 0.0.0.0/0
-      GatewayId:
-        Ref: IGWigwsbxcdi7C0EA41C
-    Metadata:
-      aws:cdk:path: NetworkStack/rtables/cdiA-route
-  rtablescdiAsrtaA81E8116:
-    Type: AWS::EC2::SubnetRouteTableAssociation
-    Properties:
-      RouteTableId:
-        Fn::GetAtt:
-          - rtablescdiArtableA59AF960
-          - RouteTableId
-      SubnetId:
-        Fn::GetAtt:
-          - subnetscdiAsubnetF37012F5
-          - SubnetId
-    Metadata:
-      aws:cdk:path: NetworkStack/rtables/cdiA-srta
   CDIcdirole92665D66:
     Type: AWS::IAM::Role
     Properties:
       AssumeRolePolicyDocument:
         Statement:
-          - Action: sts:AssumeRole
-            Effect: Allow
-            Principal:
-              Service:
-                Fn::Join:
-                  - ""
-                  - - ec2.
-                    - Ref: AWS::URLSuffix
+        - Action: sts:AssumeRole
+          Effect: Allow
+          Principal:
+            Service:
+              Fn::Join:
+              - ""
+              - - ec2.
+                - Ref: AWS::URLSuffix
         Version: "2012-10-17"
       Description: Role for sbx CDI instances
       RoleName:
         Fn::Join:
-          - ""
-          - - sbx-cdi-
-            - Ref: AWS::Region
-    Metadata:
-      aws:cdk:path: NetworkStack/CDI/cdi-role/Resource
+        - ""
+        - - sbx-cdi-
+          - Ref: AWS::Region
   CDIcdiroleDefaultPolicyE3F2C3C7:
     Type: AWS::IAM::Policy
     Properties:
       PolicyDocument:
         Statement:
-          - Action: mediaconnect:*
-            Effect: Allow
-            Resource: '*'
+        - Action: mediaconnect:*
+          Effect: Allow
+          Resource: '*'
         Version: "2012-10-17"
       PolicyName: CDIcdiroleDefaultPolicyE3F2C3C7
       Roles:
-        - Ref: CDIcdirole92665D66
-    Metadata:
-      aws:cdk:path: NetworkStack/CDI/cdi-role/DefaultPolicy/Resource
+      - Ref: CDIcdirole92665D66
   CDIcdiInstanceProfile73CBEB23:
     Type: AWS::IAM::InstanceProfile
     Properties:
       Roles:
-        - Ref: CDIcdirole92665D66
+      - Ref: CDIcdirole92665D66
       InstanceProfileName:
         Fn::Join:
-          - ""
-          - - cdiInstanceProfile-
-            - Ref: AWS::Region
-    Metadata:
-      aws:cdk:path: NetworkStack/CDI/cdiInstanceProfile
+        - ""
+        - - cdiInstanceProfile-
+          - Ref: AWS::Region
   CDIlaunchtemplate8761A726:
     Type: AWS::EC2::LaunchTemplate
     Properties:
@@ -310,68 +206,55 @@ Resources:
         IamInstanceProfile:
           Arn:
             Fn::GetAtt:
-              - CDIcdiInstanceProfile73CBEB23
-              - Arn
+            - CDIcdiInstanceProfile73CBEB23
+            - Arn
         ImageId:
           Fn::FindInMap:
-            - CDIRegionMapEF10A6AE
-            - Ref: AWS::Region
-            - ami
+          - CDIRegionMapEF10A6AE
+          - Ref: AWS::Region
+          - ami
         InstanceType:
           Ref: InstanceType
         KeyName:
           Ref: KeyName
         NetworkInterfaces:
-          - AssociatePublicIpAddress: true
-            DeviceIndex: 0
-            Groups:
-              - Fn::GetAtt:
-                  - SGsMyCfnSecurityGroupA0E5FF69
-                  - GroupId
-            InterfaceType: efa
-            SubnetId:
-              Fn::GetAtt:
-                - subnetscdiAsubnetF37012F5
-                - SubnetId
+        - AssociatePublicIpAddress: true
+          DeviceIndex: 0
+          Groups:
+          - Fn::GetAtt:
+            - SGsMyCfnSecurityGroupA0E5FF69
+            - GroupId
+          InterfaceType: efa
+          SubnetId:
+            Ref: SubetIDCDIA
         TagSpecifications:
-          - ResourceType: instance
-            Tags:
-              - Key: Name
-                Value: sbx-cdi
+        - ResourceType: instance
+          Tags:
+          - Key: Name
+            Value: sbx-cdi
         UserData:
           Fn::Base64: |
             #!/usr/bin/env bash
             /opt/sbx/InstallSbxCDI/sanity_check
             PATH=/opt/amazon/efa/bin:$PATH /opt/sbx/InstallSbxCDI/aws-efa-installer/efa_test.sh
       LaunchTemplateName: sbx-cdi
-    Metadata:
-      aws:cdk:path: NetworkStack/CDI/launch-template
   CDIInstance18DD8688F:
     Type: AWS::EC2::Instance
     Properties:
       AvailabilityZone:
         Fn::Select:
-          - 0
-          - Fn::GetAZs: ""
+        - 0
+        - Fn::GetAZs: ""
       LaunchTemplate:
         LaunchTemplateId:
           Ref: CDIlaunchtemplate8761A726
         Version:
           Fn::GetAtt:
-            - CDIlaunchtemplate8761A726
-            - LatestVersionNumber
+          - CDIlaunchtemplate8761A726
+          - LatestVersionNumber
       Tags:
-        - Key: Name
-          Value: sbx-cdi
-    Metadata:
-      aws:cdk:path: NetworkStack/CDI/Instance1
-  CDKMetadata:
-    Type: AWS::CDK::Metadata
-    Properties:
-      Analytics: v2:deflate64:H4sIAAAAAAAA/2WOQW+CQBCFf4t32FZiTK+GNIbEpgRNr82wjDoKs2R3tsYQ/nthaeXgad58M3nvJSpZqeUCbi7W1TWuqVTdXkBfo/TIOVhoUNBGw/27Q52obsBfeTpe975klKBQe0ty31rj2yeQ8cmic0/8/YEzHjIGry0I3uAeTRl/20aGOucGOUQVxgseoKxxrjCzjXNGEwgZfjyPYgee9fmATVvDRDJ2Aqyxjwga1RVmMgwzNzXp0GJW//+5NUeqse9H+AFtS3wa5aeX1k8N0RlvdbBLDVc0tukjNhWqi3v5Wb6ptXpdXBxRbD0LNaiKaf4CO670Do0BAAA=
-    Metadata:
-      aws:cdk:path: NetworkStack/CDKMetadata/Default
-    Condition: CDKMetadataAvailable
+      - Key: Name
+        Value: sbx-cdi
 Mappings:
   CDIRegionMapEF10A6AE:
     af-south-1:
@@ -423,92 +306,8 @@ Outputs:
     Description: Instance Public Ip
     Value:
       Fn::GetAtt:
-        - CDIInstance18DD8688F
-        - PublicIp
+      - CDIInstance18DD8688F
+      - PublicIp
     Export:
       Name: ec2-public-ip
-Conditions:
-  CDKMetadataAvailable:
-    Fn::Or:
-      - Fn::Or:
-          - Fn::Equals:
-              - Ref: AWS::Region
-              - af-south-1
-          - Fn::Equals:
-              - Ref: AWS::Region
-              - ap-east-1
-          - Fn::Equals:
-              - Ref: AWS::Region
-              - ap-northeast-1
-          - Fn::Equals:
-              - Ref: AWS::Region
-              - ap-northeast-2
-          - Fn::Equals:
-              - Ref: AWS::Region
-              - ap-south-1
-          - Fn::Equals:
-              - Ref: AWS::Region
-              - ap-southeast-1
-          - Fn::Equals:
-              - Ref: AWS::Region
-              - ap-southeast-2
-          - Fn::Equals:
-              - Ref: AWS::Region
-              - ca-central-1
-          - Fn::Equals:
-              - Ref: AWS::Region
-              - cn-north-1
-          - Fn::Equals:
-              - Ref: AWS::Region
-              - cn-northwest-1
-      - Fn::Or:
-          - Fn::Equals:
-              - Ref: AWS::Region
-              - eu-central-1
-          - Fn::Equals:
-              - Ref: AWS::Region
-              - eu-north-1
-          - Fn::Equals:
-              - Ref: AWS::Region
-              - eu-south-1
-          - Fn::Equals:
-              - Ref: AWS::Region
-              - eu-west-1
-          - Fn::Equals:
-              - Ref: AWS::Region
-              - eu-west-2
-          - Fn::Equals:
-              - Ref: AWS::Region
-              - eu-west-3
-          - Fn::Equals:
-              - Ref: AWS::Region
-              - me-south-1
-          - Fn::Equals:
-              - Ref: AWS::Region
-              - sa-east-1
-          - Fn::Equals:
-              - Ref: AWS::Region
-              - us-east-1
-          - Fn::Equals:
-              - Ref: AWS::Region
-              - us-east-2
-      - Fn::Or:
-          - Fn::Equals:
-              - Ref: AWS::Region
-              - us-west-1
-          - Fn::Equals:
-              - Ref: AWS::Region
-              - us-west-2
-Rules:
-  CheckBootstrapVersion:
-    Assertions:
-      - Assert:
-          Fn::Not:
-            - Fn::Contains:
-                - - "1"
-                  - "2"
-                  - "3"
-                  - "4"
-                  - "5"
-                - Ref: BootstrapVersion
-        AssertDescription: CDK bootstrap stack version 6 required. Please run 'cdk bootstrap' with a recent version of the CDK CLI.
+Conditions: {}
