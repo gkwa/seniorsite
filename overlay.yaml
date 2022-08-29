@@ -1,0 +1,67 @@
+#@ load("@ytt:overlay", "overlay")
+
+#@overlay/match by=overlay.all
+---
+Parameters:
+  #@overlay/match missing_ok=True
+  VPCID:
+    Type: AWS::EC2::VPC::Id
+    AllowedPattern: .+
+  #@overlay/match missing_ok=True
+  SubetIDCDIA:
+    Type: AWS::EC2::Subnet::Id
+    AllowedPattern: .+
+
+#@overlay/match by=overlay.all
+---
+Resources:
+  SGsMyCfnSecurityGroupA0E5FF69:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: sbx-cdi
+      GroupName: sbx-cdi
+      #@overlay/match missing_ok=True
+      #@overlay/remove
+      VpcId:
+        Ref: vpcsbxcdivpcFEE27BEE
+
+#@overlay/match by=overlay.all
+---
+Resources:
+  SGsMyCfnSecurityGroupA0E5FF69:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      #@overlay/match missing_ok=True
+      #@overlay/add
+      VpcId:
+        Ref: VPCID
+
+#@overlay/match by=overlay.all
+---
+Resources:
+  CDIlaunchtemplate8761A726:
+    Properties:
+      LaunchTemplateData:
+        NetworkInterfaces:
+        #@overlay/match by=overlay.index(0)
+        - AssociatePublicIpAddress: true
+          #@overlay/match missing_ok=True
+          #@overlay/remove
+          SubnetId:
+            Fn::GetAtt:
+            - subnetscdiAsubnetF37012F5
+            - SubnetId
+
+#@overlay/match by=overlay.all
+---
+Resources:
+  CDIlaunchtemplate8761A726:
+    Properties:
+      LaunchTemplateData:
+        NetworkInterfaces:
+        #@overlay/match by=overlay.index(0)
+        - AssociatePublicIpAddress: true
+          #@overlay/match missing_ok=True
+          #@overlay/add
+          SubnetId:
+            Ref: SubetIDCDIA
