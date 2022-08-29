@@ -2,6 +2,58 @@
 
 #@overlay/match by=overlay.all
 ---
+Resources:
+  #@overlay/match missing_ok=True
+  #@overlay/remove
+  rtablescdiAsrtaA81E8116:
+
+  #@overlay/match missing_ok=True
+  #@overlay/remove
+  vpcsbxcdivpcFEE27BEE:
+
+  #@overlay/match missing_ok=True
+  #@overlay/remove
+  subnetscdiAsubnetF37012F5:
+
+  #@overlay/match missing_ok=True
+  #@overlay/remove
+  subnetscdiBsubnet1A3B9F51:
+
+  #@overlay/match missing_ok=True
+  #@overlay/remove
+  IGWigwsbxcdi7C0EA41C:
+
+  #@overlay/match missing_ok=True
+  #@overlay/remove
+  IGWvpcgwsbxcdiDF298982:
+
+  #@overlay/match missing_ok=True
+  #@overlay/remove
+  rtablescdiArtableA59AF960:
+
+  #@overlay/match missing_ok=True
+  #@overlay/remove
+  rtablescdiBsrta63414513:
+
+  #@overlay/match missing_ok=True
+  #@overlay/remove
+  rtablescdiArouteEE2A88FE:
+
+#@overlay/match by=overlay.all
+---
+#@overlay/match missing_ok=True
+#@overlay/remove
+Rules
+
+#@overlay/match by=overlay.all
+---
+Conditions:
+  #@overlay/match missing_ok=True
+  #@overlay/remove
+  CDKMetadataAvailable
+
+#@overlay/match by=overlay.all
+---
 Parameters:
   #@overlay/match missing_ok=True
   VPCID:
