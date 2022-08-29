@@ -1,0 +1,14 @@
+#@ load("@ytt:overlay", "overlay")
+
+#@overlay/match by=overlay.all
+---
+Resources:
+  SGsMyCfnSecurityGroupA0E5FF69:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: sbx-cdi
+      GroupName: sbx-cdi
+      #@overlay/match missing_ok=True
+      #@overlay/remove
+      VpcId:
+        Ref: vpcsbxcdivpcFEE27BEE

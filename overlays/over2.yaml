@@ -1,0 +1,12 @@
+#@ load("@ytt:overlay", "overlay")
+
+#@overlay/match by=overlay.all
+---
+Resources:
+  SGsMyCfnSecurityGroupA0E5FF69:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      #@overlay/match missing_ok=True
+      #@overlay/add
+      VpcId:
+        Ref: VPCID

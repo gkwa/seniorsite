@@ -1,0 +1,27 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: Streambox CDI
+Metadata:
+  AWS::CloudFormation::Interface:
+    ParameterGroups:
+    - Label:
+        default: EC2 Configuration
+      Parameters:
+      - InstanceType
+      - KeyName
+    - Label:
+        default: Network Configuration
+      Parameters:
+      - SSHLocation
+      - VPCID
+      - SubetIDCDIA
+    ParameterLabels:
+      InstanceType:
+        default: Instance Type
+      KeyName:
+        default: Key Pair Name
+      SSHLocation:
+        default: SSH IP Address Range
+      VPCID:
+        default: ID of pre-existing VPC in which to create EC2 instance
+      SubetIDCDIA:
+        default: ID of pre-existing subnet in which to create EC2 instance
