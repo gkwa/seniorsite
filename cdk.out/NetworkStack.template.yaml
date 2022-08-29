@@ -23,11 +23,11 @@ Metadata:
       SSHLocation:
         default: SSH IP Address Range
       VPCID:
-        default: ID of pre-existing VPC in which to create EC2 instance
+        default: VPC ID
       SubetIDCDIA:
-        default: ID of pre-existing subnet in which to create EC2 instance
+        default: Subnet ID
       AZ:
-        default: Subnet availabiltiy zone
+        default: AZ
 Parameters:
   SSHLocation:
     Type: String
@@ -49,12 +49,15 @@ Parameters:
   VPCID:
     Type: AWS::EC2::VPC::Id
     AllowedPattern: .+
+    Description: ID of pre-existing VPC in which to create EC2 instance
   AZ:
     Type: AWS::EC2::AvailabilityZone::Name
     AllowedPattern: .+
+    Description: Subnet availabiltiy zone
   SubetIDCDIA:
     Type: AWS::EC2::Subnet::Id
     AllowedPattern: .+
+    Description: ID of pre-existing subnet in which to create EC2 instance
 Resources:
   SGsMyCfnSecurityGroupA0E5FF69:
     Type: AWS::EC2::SecurityGroup

@@ -14,6 +14,7 @@ Metadata:
       - SSHLocation
       - VPCID
       - SubetIDCDIA
+      - AZ
     ParameterLabels:
       InstanceType:
         default: Instance Type
@@ -22,6 +23,8 @@ Metadata:
       SSHLocation:
         default: SSH IP Address Range
       VPCID:
-        default: ID of pre-existing VPC in which to create EC2 instance
+        default: VPC ID
       SubetIDCDIA:
-        default: ID of pre-existing subnet in which to create EC2 instance
+        default: Subnet ID
+      AZ:
+        default: AZ
