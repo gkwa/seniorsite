@@ -2,5 +2,5 @@
 
 set -e
 
-cdk synth >cdk.out/NetworkStack.template.yaml
+cdk synth
 yq e -P cdk.out/NetworkStack.template.json >cdk.out/NetworkStack.template.yaml
