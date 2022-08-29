@@ -3,5 +3,5 @@
 set -e
 set -x
 
-./run1.sh
+./synth.sh
 ./run2.sh

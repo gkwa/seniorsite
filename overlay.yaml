@@ -39,18 +39,22 @@ Resources:
   #@overlay/remove
   rtablescdiArouteEE2A88FE:
 
+  #@overlay/match missing_ok=True
+  #@overlay/remove
+  CDKMetadata:
+
 #@overlay/match by=overlay.all
 ---
 #@overlay/match missing_ok=True
 #@overlay/remove
-Rules
+Rules:
 
 #@overlay/match by=overlay.all
 ---
 Conditions:
   #@overlay/match missing_ok=True
   #@overlay/remove
-  CDKMetadataAvailable
+  CDKMetadataAvailable:
 
 #@overlay/match by=overlay.all
 ---
@@ -63,6 +67,10 @@ Parameters:
   SubetIDCDIA:
     Type: AWS::EC2::Subnet::Id
     AllowedPattern: .+
+
+  #@overlay/match missing_ok=True
+  #@overlay/remove
+  BootstrapVersion:
 
 #@overlay/match by=overlay.all
 ---
