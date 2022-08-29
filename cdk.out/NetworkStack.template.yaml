@@ -14,6 +14,7 @@ Metadata:
           - SSHLocation
           - VPCID
           - SubetIDCDIA
+          - AZ
     ParameterLabels:
       InstanceType:
         default: Instance Type
@@ -25,6 +26,8 @@ Metadata:
         default: ID of pre-existing VPC in which to create EC2 instance
       SubetIDCDIA:
         default: ID of pre-existing subnet in which to create EC2 instance
+      AZ:
+        default: Subnet availabiltiy zone
 Parameters:
   SSHLocation:
     Type: String
@@ -45,6 +48,9 @@ Parameters:
     Description: EC2 instance type
   VPCID:
     Type: AWS::EC2::VPC::Id
+    AllowedPattern: .+
+  AZ:
+    Type: AWS::EC2::AvailabilityZone::Name
     AllowedPattern: .+
   SubetIDCDIA:
     Type: AWS::EC2::Subnet::Id
@@ -242,9 +248,7 @@ Resources:
     Type: AWS::EC2::Instance
     Properties:
       AvailabilityZone:
-        Fn::Select:
-          - 0
-          - Fn::GetAZs: ""
+        Ref: AZ
       LaunchTemplate:
         LaunchTemplateId:
           Ref: CDIlaunchtemplate8761A726
