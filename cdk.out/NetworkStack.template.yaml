@@ -247,6 +247,8 @@ Resources:
   CDIInstance18DD8688F:
     Type: AWS::EC2::Instance
     Properties:
+      InstanceType:
+        Ref: InstanceType
       AvailabilityZone:
         Ref: AZ
       LaunchTemplate:
