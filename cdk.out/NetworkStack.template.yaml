@@ -49,7 +49,7 @@ Parameters:
   VPCID:
     Type: AWS::EC2::VPC::Id
     AllowedPattern: .+
-    Description: ID of pre-existing VPC in which to create EC2 instance
+    Description: ID of VPC in which to create EC2 instance
   AZ:
     Type: AWS::EC2::AvailabilityZone::Name
     AllowedPattern: .+
@@ -57,7 +57,7 @@ Parameters:
   SubetIDCDIA:
     Type: AWS::EC2::Subnet::Id
     AllowedPattern: .+
-    Description: ID of pre-existing subnet in which to create EC2 instance
+    Description: ID of subnet within the VPC in which to create EC2 instance
 Resources:
   SGsMyCfnSecurityGroupA0E5FF69:
     Type: AWS::EC2::SecurityGroup
@@ -250,8 +250,6 @@ Resources:
   CDIInstance18DD8688F:
     Type: AWS::EC2::Instance
     Properties:
-      InstanceType:
-        Ref: InstanceType
       AvailabilityZone:
         Ref: AZ
       LaunchTemplate:
@@ -264,6 +262,8 @@ Resources:
       Tags:
         - Key: Name
           Value: sbx-cdi
+      InstanceType:
+        Ref: InstanceType
 Mappings:
   CDIRegionMapEF10A6AE:
     af-south-1:

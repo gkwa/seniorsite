@@ -51,6 +51,7 @@ Rules:
 
 #@overlay/match by=overlay.all
 ---
+#@overlay/match missing_ok=True
 Conditions:
   #@overlay/match missing_ok=True
   #@overlay/remove
@@ -64,7 +65,7 @@ Parameters:
   VPCID:
     Type: AWS::EC2::VPC::Id
     AllowedPattern: .+
-    Description: ID of pre-existing VPC in which to create EC2 instance
+    Description: ID of VPC in which to create EC2 instance
 
   #@overlay/match missing_ok=True
   #@overlay/merge
@@ -78,7 +79,7 @@ Parameters:
   SubetIDCDIA:
     Type: AWS::EC2::Subnet::Id
     AllowedPattern: .+
-    Description: ID of pre-existing subnet in which to create EC2 instance
+    Description: ID of subnet within the VPC in which to create EC2 instance
 
   #@overlay/match missing_ok=True
   #@overlay/remove
