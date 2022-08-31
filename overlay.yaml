@@ -60,13 +60,25 @@ Conditions:
 ---
 Parameters:
   #@overlay/match missing_ok=True
+  #@overlay/merge
   VPCID:
     Type: AWS::EC2::VPC::Id
     AllowedPattern: .+
+    Description: ID of pre-existing VPC in which to create EC2 instance
+
   #@overlay/match missing_ok=True
+  #@overlay/merge
+  AZ:
+    Type: AWS::EC2::AvailabilityZone::Name
+    AllowedPattern: .+
+    Description: Subnet availabiltiy zone
+
+  #@overlay/match missing_ok=True
+  #@overlay/merge
   SubetIDCDIA:
     Type: AWS::EC2::Subnet::Id
     AllowedPattern: .+
+    Description: ID of pre-existing subnet in which to create EC2 instance
 
   #@overlay/match missing_ok=True
   #@overlay/remove
@@ -106,9 +118,31 @@ Resources:
           #@overlay/match missing_ok=True
           #@overlay/remove
           SubnetId:
-            Fn::GetAtt:
-            - subnetscdiAsubnetF37012F5
-            - SubnetId
+
+#@overlay/match by=overlay.all
+---
+Resources:
+  CDIInstance18DD8688F:
+    Properties:
+      AvailabilityZone:
+        #@overlay/match missing_ok=True
+        #@overlay/remove
+        Fn::Select:
+
+      #@overlay/match missing_ok=True
+      #@overlay/add
+      InstanceType:
+        Ref: InstanceType
+
+#@overlay/match by=overlay.all
+---
+Resources:
+  CDIInstance18DD8688F:
+    Properties:
+      AvailabilityZone:
+        #@overlay/match missing_ok=True
+        #@overlay/add
+        Ref: AZ
 
 #@overlay/match by=overlay.all
 ---
