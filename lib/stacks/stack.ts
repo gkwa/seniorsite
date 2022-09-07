@@ -33,7 +33,7 @@ export class NetworkStack extends Stack {
             type: 'String',
             description: 'EC2 instance type',
             default: 'c5n.9xlarge',
-            constraintDescription: 'EC2 instance type that supports Elastic Fiber Adapter (EFA).'
+            constraintDescription: 'EC2 instance type that supports Elastic Fiber Adapter (EFA).',
         });
 
         const instanceType = new ec2.InstanceType(instanceTypeParam.valueAsString);
