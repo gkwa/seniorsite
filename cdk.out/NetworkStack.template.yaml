@@ -244,6 +244,25 @@ Resources:
         UserData:
           Fn::Base64: |
             #!/usr/bin/env bash
+
+            if [[ -f /etc/os-release ]]; then
+                . /etc/os-release
+                if grep --quiet Amazon <<<"$NAME"; then
+                    yum -y install amazon-linux-extras
+                    /usr/bin/amazon-linux-extras enable epel
+                fi
+            fi
+
+            yum -y install epel-release
+            yum -y install jq xmlstarlet
+
+            id=$(curl -sS http://169.254.169.254/latest/dynamic/instance-identity/document | jq -r .instanceId)
+            if [[ $id != "null" ]]; then
+                pass=$(echo -n $id | md5sum | sed -E 's/[^[:alnum:]]+//g')
+                xmlstarlet edit --inplace --update '//accounts/user[@username="administrator"]/@pass'         --value $pass --insert '//accounts/user[@username="administrator" and not(@pass)]'         --type attr -n pass --value $pass /var/www/html/data/accounts.xml
+            fi
+
+
             /opt/sbx/InstallSbxCDI/sanity_check
             PATH=/opt/amazon/efa/bin:$PATH /opt/sbx/InstallSbxCDI/aws-efa-installer/efa_test.sh
       LaunchTemplateName: sbx-cdi
