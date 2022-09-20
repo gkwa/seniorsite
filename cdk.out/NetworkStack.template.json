@@ -529,7 +529,7 @@
       }
      ],
      "UserData": {
-      "Fn::Base64": "#!/usr/bin/env bash\n\nif [[ -f /etc/os-release ]]; then\n    . /etc/os-release\n    if grep --quiet Amazon <<<\"$NAME\"; then\n        yum -y install amazon-linux-extras\n        /usr/bin/amazon-linux-extras enable epel\n    fi\nfi\n\nyum -y install epel-release\nyum -y install jq xmlstarlet\n\nid=$(curl -sS http://169.254.169.254/latest/dynamic/instance-identity/document | jq -r .instanceId)\nif [[ $id != \"null\" ]]; then\n    pass=$(echo -n $id | md5sum | sed -E 's/[^[:alnum:]]+//g')\n    xmlstarlet edit --inplace --update '//accounts/user[@username=\"administrator\"]/@pass'         --value $pass --insert '//accounts/user[@username=\"administrator\" and not(@pass)]'         --type attr -n pass --value $pass /var/www/html/data/accounts.xml\nfi\n\n\n/opt/sbx/InstallSbxCDI/sanity_check\nPATH=/opt/amazon/efa/bin:$PATH /opt/sbx/InstallSbxCDI/aws-efa-installer/efa_test.sh\n"
+      "Fn::Base64": "#!/usr/bin/env bash\n# update administrator password to ec2 instance-id\nphp /opt/sbx/update_pass_accounts.php --xml=/var/www/html/data/accounts.xml\n\n/opt/sbx/InstallSbxCDI/sanity_check\nPATH=/opt/amazon/efa/bin:$PATH /opt/sbx/InstallSbxCDI/aws-efa-installer/efa_test.sh\n"
      }
     },
     "LaunchTemplateName": "sbx-cdi"
