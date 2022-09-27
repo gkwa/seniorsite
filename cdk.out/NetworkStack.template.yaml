@@ -7,6 +7,7 @@ Metadata:
           default: EC2 Configuration
         Parameters:
           - InstanceType
+          - InstanceProfileName
           - KeyName
       - Label:
           default: Network Configuration
@@ -16,6 +17,8 @@ Metadata:
           - SubetIDCDIA
           - AZ
     ParameterLabels:
+      InstanceProfileName:
+        default: Instance Profile Name
       InstanceType:
         default: Instance Type
       KeyName:
@@ -29,6 +32,9 @@ Metadata:
       AZ:
         default: AZ
 Parameters:
+  InstanceProfileName:
+    Type: String
+    Description: Name of instance profile that has write access to MediaLive in the format arn:aws:iam::<account-id>:instance-profile/<instance-profile-name>
   SSHLocation:
     Type: String
     AllowedPattern: ^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5]).){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])(/([0-9]|[1-2][0-9]|3[0-2]))$
@@ -166,57 +172,13 @@ Resources:
       IpProtocol: "-1"
       CidrIp: 0.0.0.0/0
       Description: Allow all traffic out
-  CDIcdirole92665D66:
-    Type: AWS::IAM::Role
-    Properties:
-      AssumeRolePolicyDocument:
-        Statement:
-          - Action: sts:AssumeRole
-            Effect: Allow
-            Principal:
-              Service:
-                Fn::Join:
-                  - ""
-                  - - ec2.
-                    - Ref: AWS::URLSuffix
-        Version: "2012-10-17"
-      Description: Role for sbx CDI instances
-      RoleName:
-        Fn::Join:
-          - ""
-          - - sbx-cdi-
-            - Ref: AWS::Region
-  CDIcdiroleDefaultPolicyE3F2C3C7:
-    Type: AWS::IAM::Policy
-    Properties:
-      PolicyDocument:
-        Statement:
-          - Action: mediaconnect:*
-            Effect: Allow
-            Resource: '*'
-        Version: "2012-10-17"
-      PolicyName: CDIcdiroleDefaultPolicyE3F2C3C7
-      Roles:
-        - Ref: CDIcdirole92665D66
-  CDIcdiInstanceProfile73CBEB23:
-    Type: AWS::IAM::InstanceProfile
-    Properties:
-      Roles:
-        - Ref: CDIcdirole92665D66
-      InstanceProfileName:
-        Fn::Join:
-          - ""
-          - - cdiInstanceProfile-
-            - Ref: AWS::Region
   CDIlaunchtemplate8761A726:
     Type: AWS::EC2::LaunchTemplate
     Properties:
       LaunchTemplateData:
         IamInstanceProfile:
           Arn:
-            Fn::GetAtt:
-              - CDIcdiInstanceProfile73CBEB23
-              - Arn
+            Ref: InstanceProfileName
         ImageId:
           Fn::FindInMap:
             - CDIRegionMapEF10A6AE
