@@ -585,70 +585,70 @@
  "Mappings": {
   "CDIRegionMapEF10A6AE": {
    "us-west-2": {
-    "ami": "ami-0d1435fca6d5bfcb2"
+    "ami": "ami-0ce173a3ab9d06c05"
    },
    "us-west-1": {
-    "ami": "ami-0ce1f16458c55e4af"
+    "ami": "ami-01759491007644bde"
    },
    "us-east-2": {
-    "ami": "ami-0580ca52b3078b713"
+    "ami": "ami-0ed89357af2181d80"
    },
    "us-east-1": {
-    "ami": "ami-087fc8372157d3dcd"
+    "ami": "ami-007d0333d0e7ad61d"
    },
    "sa-east-1": {
-    "ami": "ami-0b1529639c35af877"
+    "ami": "ami-0ced256d6cb1d82f3"
    },
    "me-south-1": {
-    "ami": "ami-018fc14d9234d20df"
+    "ami": "ami-0ff048f5c4121e25b"
    },
    "eu-west-3": {
-    "ami": "ami-077526f7b35e4b672"
+    "ami": "ami-03bdae87711b2b891"
    },
    "eu-west-2": {
-    "ami": "ami-0568a84f1458f2f28"
+    "ami": "ami-0f382b42debeb15e3"
    },
    "eu-west-1": {
-    "ami": "ami-056418d671b842b23"
+    "ami": "ami-0eeaedd9cbe750639"
    },
    "eu-south-1": {
-    "ami": "ami-091ce22cb8d342a8d"
+    "ami": "ami-0e81fc333c93808a9"
    },
    "eu-north-1": {
-    "ami": "ami-071cf944c2ec8bb07"
+    "ami": "ami-062e0fac270b30ffb"
    },
    "eu-central-1": {
-    "ami": "ami-028a753b13020b2c7"
+    "ami": "ami-0c5b4c03d2e0f31cb"
    },
    "ca-central-1": {
-    "ami": "ami-002f1b81766507eef"
+    "ami": "ami-055f17f00abd18807"
    },
    "ap-southeast-3": {
-    "ami": "ami-07f52057910279baf"
+    "ami": "ami-07f53eccdace6d082"
    },
    "ap-southeast-2": {
-    "ami": "ami-065980fa871407cf5"
+    "ami": "ami-0afbeef41ac1208ad"
    },
    "ap-southeast-1": {
-    "ami": "ami-06234a3460c389930"
+    "ami": "ami-05c120b26ad3c8879"
    },
    "ap-south-1": {
-    "ami": "ami-085a3e2f85771757d"
+    "ami": "ami-0d3e2cbd38aa1fd87"
    },
    "ap-northeast-3": {
-    "ami": "ami-0d378487e93518392"
+    "ami": "ami-0ce6de759fe005895"
    },
    "ap-northeast-2": {
-    "ami": "ami-0534f161f1dcf207c"
+    "ami": "ami-0a7dff6aa423249da"
    },
    "ap-northeast-1": {
-    "ami": "ami-093f5560f5944f175"
+    "ami": "ami-008a46d93274e4fc9"
    },
    "ap-east-1": {
-    "ami": "ami-0abf403919e23c298"
+    "ami": "ami-0627310a79981589b"
    },
    "af-south-1": {
-    "ami": "ami-0ea2f25d95df9957b"
+    "ami": "ami-06b5d9eb401ec12db"
    }
   }
  },
