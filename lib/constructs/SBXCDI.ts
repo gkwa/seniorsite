@@ -21,28 +21,7 @@ export class SBXCDI extends Construct {
 
         const regionMap = new CfnMapping(this, 'RegionMap', {
             mapping: {
-                'us-west-2': { ami: 'ami-0ce173a3ab9d06c05' },
-                'us-west-1': { ami: 'ami-01759491007644bde' },
-                'us-east-2': { ami: 'ami-0ed89357af2181d80' },
-                'us-east-1': { ami: 'ami-007d0333d0e7ad61d' },
-                'sa-east-1': { ami: 'ami-0ced256d6cb1d82f3' },
-                'me-south-1': { ami: 'ami-0ff048f5c4121e25b' },
-                'eu-west-3': { ami: 'ami-03bdae87711b2b891' },
-                'eu-west-2': { ami: 'ami-0f382b42debeb15e3' },
-                'eu-west-1': { ami: 'ami-0eeaedd9cbe750639' },
-                'eu-south-1': { ami: 'ami-0e81fc333c93808a9' },
-                'eu-north-1': { ami: 'ami-062e0fac270b30ffb' },
-                'eu-central-1': { ami: 'ami-0c5b4c03d2e0f31cb' },
-                'ca-central-1': { ami: 'ami-055f17f00abd18807' },
-                'ap-southeast-3': { ami: 'ami-07f53eccdace6d082' },
-                'ap-southeast-2': { ami: 'ami-0afbeef41ac1208ad' },
-                'ap-southeast-1': { ami: 'ami-05c120b26ad3c8879' },
-                'ap-south-1': { ami: 'ami-0d3e2cbd38aa1fd87' },
-                'ap-northeast-3': { ami: 'ami-0ce6de759fe005895' },
-                'ap-northeast-2': { ami: 'ami-0a7dff6aa423249da' },
-                'ap-northeast-1': { ami: 'ami-008a46d93274e4fc9' },
-                'ap-east-1': { ami: 'ami-0627310a79981589b' },
-                'af-south-1': { ami: 'ami-06b5d9eb401ec12db' },
+                'us-east-1': { ami: 'ami-04581fbf744a7d11f' }
             },
         });
 
