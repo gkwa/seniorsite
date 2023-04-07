@@ -3,4 +3,4 @@
 set -e
 
 cdk synth
-yq e -P cdk.out/NetworkStack.template.json >cdk.out/NetworkStack.template.yaml
+yq eval --output-format=yaml --prettyPrint cdk.out/NetworkStack.template.json >cdk.out/NetworkStack.template.yaml
