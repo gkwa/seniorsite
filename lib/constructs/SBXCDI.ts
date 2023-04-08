@@ -20,9 +20,30 @@ export class SBXCDI extends Construct {
         const { subnets, cdisg } = props;
 
         const regionMap = new CfnMapping(this, 'RegionMap', {
-            mapping: {
-                'us-east-1': { ami: 'ami-04581fbf744a7d11f' }
-            },
+             mapping: {
+                'us-west-2': { ami: 'ami-08176f1c5d17cb0c4' },
+                'us-west-1': { ami: 'ami-08176f1c5d17cb0c4' },
+                'us-east-2': { ami: 'ami-08176f1c5d17cb0c4' },
+                'us-east-1': { ami: 'ami-08176f1c5d17cb0c4' },
+                'sa-east-1': { ami: 'ami-08176f1c5d17cb0c4' },
+                'me-south-1': { ami: 'ami-08176f1c5d17cb0c4' },
+                'eu-west-3': { ami: 'ami-08176f1c5d17cb0c4' },
+                'eu-west-2': { ami: 'ami-08176f1c5d17cb0c4' },
+                'eu-west-1': { ami: 'ami-08176f1c5d17cb0c4' },
+                'eu-south-1': { ami: 'ami-08176f1c5d17cb0c4' },
+                'eu-north-1': { ami: 'ami-08176f1c5d17cb0c4' },
+                'eu-central-1': { ami: 'ami-08176f1c5d17cb0c4' },
+                'ca-central-1': { ami: 'ami-08176f1c5d17cb0c4' },
+                'ap-southeast-3': { ami: 'ami-08176f1c5d17cb0c4' },
+                'ap-southeast-2': { ami: 'ami-08176f1c5d17cb0c4' },
+                'ap-southeast-1': { ami: 'ami-08176f1c5d17cb0c4' },
+                'ap-south-1': { ami: 'ami-08176f1c5d17cb0c4' },
+                'ap-northeast-3': { ami: 'ami-08176f1c5d17cb0c4' },
+                'ap-northeast-2': { ami: 'ami-08176f1c5d17cb0c4' },
+                'ap-northeast-1': { ami: 'ami-08176f1c5d17cb0c4' },
+                'ap-east-1': { ami: 'ami-08176f1c5d17cb0c4' },
+                'af-south-1': { ami: 'ami-08176f1c5d17cb0c4' }
+             },
         });
 
         // Role for EC2 Instance Profile
