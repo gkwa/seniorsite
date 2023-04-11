@@ -21,28 +21,28 @@ export class SBXCDI extends Construct {
 
         const regionMap = new CfnMapping(this, 'RegionMap', {
              mapping: {
-                'us-west-2': { ami: 'ami-08176f1c5d17cb0c4' },
-                'us-west-1': { ami: 'ami-08176f1c5d17cb0c4' },
-                'us-east-2': { ami: 'ami-08176f1c5d17cb0c4' },
-                'us-east-1': { ami: 'ami-08176f1c5d17cb0c4' },
-                'sa-east-1': { ami: 'ami-08176f1c5d17cb0c4' },
-                'me-south-1': { ami: 'ami-08176f1c5d17cb0c4' },
-                'eu-west-3': { ami: 'ami-08176f1c5d17cb0c4' },
-                'eu-west-2': { ami: 'ami-08176f1c5d17cb0c4' },
-                'eu-west-1': { ami: 'ami-08176f1c5d17cb0c4' },
-                'eu-south-1': { ami: 'ami-08176f1c5d17cb0c4' },
-                'eu-north-1': { ami: 'ami-08176f1c5d17cb0c4' },
-                'eu-central-1': { ami: 'ami-08176f1c5d17cb0c4' },
-                'ca-central-1': { ami: 'ami-08176f1c5d17cb0c4' },
-                'ap-southeast-3': { ami: 'ami-08176f1c5d17cb0c4' },
-                'ap-southeast-2': { ami: 'ami-08176f1c5d17cb0c4' },
-                'ap-southeast-1': { ami: 'ami-08176f1c5d17cb0c4' },
-                'ap-south-1': { ami: 'ami-08176f1c5d17cb0c4' },
-                'ap-northeast-3': { ami: 'ami-08176f1c5d17cb0c4' },
-                'ap-northeast-2': { ami: 'ami-08176f1c5d17cb0c4' },
-                'ap-northeast-1': { ami: 'ami-08176f1c5d17cb0c4' },
-                'ap-east-1': { ami: 'ami-08176f1c5d17cb0c4' },
-                'af-south-1': { ami: 'ami-08176f1c5d17cb0c4' }
+                'us-west-2': { ami: 'ami-084e25a00d365b4c7' },
+                'us-west-1': { ami: 'ami-084e25a00d365b4c7' },
+                'us-east-2': { ami: 'ami-084e25a00d365b4c7' },
+                'us-east-1': { ami: 'ami-084e25a00d365b4c7' },
+                'sa-east-1': { ami: 'ami-084e25a00d365b4c7' },
+                'me-south-1': { ami: 'ami-084e25a00d365b4c7' },
+                'eu-west-3': { ami: 'ami-084e25a00d365b4c7' },
+                'eu-west-2': { ami: 'ami-084e25a00d365b4c7' },
+                'eu-west-1': { ami: 'ami-084e25a00d365b4c7' },
+                'eu-south-1': { ami: 'ami-084e25a00d365b4c7' },
+                'eu-north-1': { ami: 'ami-084e25a00d365b4c7' },
+                'eu-central-1': { ami: 'ami-084e25a00d365b4c7' },
+                'ca-central-1': { ami: 'ami-084e25a00d365b4c7' },
+                'ap-southeast-3': { ami: 'ami-084e25a00d365b4c7' },
+                'ap-southeast-2': { ami: 'ami-084e25a00d365b4c7' },
+                'ap-southeast-1': { ami: 'ami-084e25a00d365b4c7' },
+                'ap-south-1': { ami: 'ami-084e25a00d365b4c7' },
+                'ap-northeast-3': { ami: 'ami-084e25a00d365b4c7' },
+                'ap-northeast-2': { ami: 'ami-084e25a00d365b4c7' },
+                'ap-northeast-1': { ami: 'ami-084e25a00d365b4c7' },
+                'ap-east-1': { ami: 'ami-084e25a00d365b4c7' },
+                'af-south-1': { ami: 'ami-084e25a00d365b4c7' }
              },
         });
 
@@ -67,9 +67,6 @@ export class SBXCDI extends Construct {
 
         // User Data script install streambox encoder/iris
         const userData = Fn.base64(`#!/usr/bin/env bash
-# update administrator password to ec2 instance-id
-php /opt/sbx/update_pass_accounts.php --xml=/var/www/html/data/accounts.xml
-
 /opt/sbx/InstallSbxCDI/sanity_check
 PATH=/opt/amazon/efa/bin:$PATH /opt/sbx/InstallSbxCDI/aws-efa-installer/efa_test.sh
 `);
