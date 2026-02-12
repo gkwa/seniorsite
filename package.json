@@ -14,7 +14,7 @@
     "@types/prettier": "3.0.0",
     "@typescript-eslint/eslint-plugin": "8.54.0",
     "@typescript-eslint/parser": "8.54.0",
-    "aws-cdk-lib": "2.237.1",
+    "aws-cdk-lib": "2.238.0",
     "constructs": "10.4.5",
     "eslint": "10.0.0",
     "eslint-config-airbnb-base": "15.0.0",
@@ -24,7 +24,7 @@
     "typescript": "5.9.3"
   },
   "peerDependencies": {
-    "aws-cdk-lib": "2.237.1",
+    "aws-cdk-lib": "2.238.0",
     "constructs": "10.4.5"
   },
   "dependencies": {
