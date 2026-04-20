@@ -21,7 +21,7 @@
     "eslint-plugin-import": "2.32.0",
     "jest": "30.3.0",
     "ts-jest": "29.4.9",
-    "typescript": "6.0.2"
+    "typescript": "6.0.3"
   },
   "peerDependencies": {
     "aws-cdk-lib": "2.250.0",
