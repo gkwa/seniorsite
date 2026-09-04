@@ -19,7 +19,7 @@
     "eslint": "10.9.1",
     "eslint-config-airbnb-base": "15.0.0",
     "eslint-plugin-import": "2.32.0",
-    "jest": "30.5.0",
+    "jest": "30.5.1",
     "ts-jest": "29.4.12",
     "typescript": "7.0.2"
   },
